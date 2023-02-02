@@ -1,16 +1,11 @@
 # tap_tennis
 
-A new Flutter project.
+M30819
+Group 15 - 2022/2023
 
-## Getting Started
+## About
+A game based on the classic arcade game 'Pong.'
 
-This project is a starting point for a Flutter application.
+- [Our Specification & Design Document can be found here](https://portdotacdotuk-my.sharepoint.com/:b:/g/personal/up2052662_port_ac_uk/EWcdtofwmI9Klo27rd-pHp4BktES1mLWkKIyemtzY7tT0w?e=9GwPfd)
 
-A few resources to get you started if this is your first Flutter project:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
