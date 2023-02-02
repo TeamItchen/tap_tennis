@@ -1,35 +1,42 @@
 {
   "project_info": {
-    "project_number": "1043177693066",
-    "firebase_url": "https://tap-tennis-e145c-default-rtdb.europe-west1.firebasedatabase.app",
-    "project_id": "tap-tennis-e145c",
-    "storage_bucket": "tap-tennis-e145c.appspot.com"
+    "project_number": "652972449352",
+    "firebase_url": "https://tap-tennis-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "tap-tennis",
+    "storage_bucket": "tap-tennis.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1043177693066:android:0d19ee98097ec994ec7273",
+        "mobilesdk_app_id": "1:652972449352:android:25ce205144f170ababc27d",
         "android_client_info": {
           "package_name": "com.example.tap_tennis"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1043177693066-5t71f2raqvaltg9e01fr48u4qjdkprtv.apps.googleusercontent.com",
+          "client_id": "652972449352-k1s8a37jbkujcmngt0m3e6p63h1g1trn.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyActyMH6T-jwL9QBIvKubCknHY8FPjtcWk"
+          "current_key": "AIzaSyDOvTaI4pEe9TOZHq_k_YCrD-q_ws_9psQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "1043177693066-5t71f2raqvaltg9e01fr48u4qjdkprtv.apps.googleusercontent.com",
+              "client_id": "652972449352-k1s8a37jbkujcmngt0m3e6p63h1g1trn.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "652972449352-crp13tgsatdhth52vp8nd56bn6hign4e.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.tapTennis"
+              }
             }
           ]
         }
