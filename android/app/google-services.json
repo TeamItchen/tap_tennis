@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1043177693066",
+    "firebase_url": "https://tap-tennis-e145c-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "tap-tennis-e145c",
+    "storage_bucket": "tap-tennis-e145c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1043177693066:android:0d19ee98097ec994ec7273",
+        "android_client_info": {
+          "package_name": "com.example.tap_tennis"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1043177693066-5t71f2raqvaltg9e01fr48u4qjdkprtv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyActyMH6T-jwL9QBIvKubCknHY8FPjtcWk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1043177693066-5t71f2raqvaltg9e01fr48u4qjdkprtv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
