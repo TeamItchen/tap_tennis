@@ -5,8 +5,9 @@ Group 15 - 2022/2023
 
 ## About
 A game based on the classic arcade game 'Pong.'
-
 The project is done using a relatively new technology called 'flutter'.
+
+**V1 Goals**
 
 
 
