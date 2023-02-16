@@ -11,7 +11,7 @@ The project is done using a relatively new technology called 'flutter'.
 
 ### V0
 
-- Build Flutter project
+- Build Flutter project [ ]
 - Export the project onto GitHub
 - Check if Runnable on Mobile devices 
 
