@@ -55,6 +55,13 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
+  assets:
+    - assets/
+
+  #fonts:
+    #- family: FuturaBook    
+    #  fonts:
+    #    - asset: assets/fonts/futura_book_regular.otf
 
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in

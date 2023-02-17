@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
+import 'package:tap_tennis/play.dart' as game_page;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -33,18 +34,20 @@ class MyApp extends StatelessWidget {
           // is not restarted.
           primarySwatch: Colors.blue,
         ),
-        home: FutureBuilder(
-            future: _fbApp,
-            builder: (context, snapshot) {
-              if (snapshot.hasError) {
-                print("You have an error! ${snapshot.error.toString()}");
-                return Text("Something went wrong!");
-              } else if (snapshot.hasData) {
-                return MyHomePage(title: 'Flutter Demo Home Page');
-              } else {
-                return Center(child: CircularProgressIndicator());
-              }
-            }));
+				home: game_page.main(),
+        // home: FutureBuilder(
+        //     future: _fbApp,
+        //     builder: (context, snapshot) {
+        //       if (snapshot.hasError) {
+        //         print("You have an error! ${snapshot.error.toString()}");
+        //         return Text("Something went wrong!");
+        //       } else if (snapshot.hasData) {
+        //         return MyHomePage(title: 'Flutter Demo Home Page');
+        //       } else {
+        //         return Center(child: CircularProgressIndicator());
+        //       }
+        //     })
+						);
   }
 }
 
