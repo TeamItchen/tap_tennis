@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
+        title: 'Pong',
         theme: ThemeData(
           // This is the theme of your application.
           //
@@ -115,21 +116,48 @@ class _MyHomePageState extends State<MyHomePage> {
           // horizontal).
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            ElevatedButton(onPressed: () {}, child: Text("Start Game")),
+            ElevatedButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => Options()),
+                  );
+                },
+                child: Text("Options")),
+            ElevatedButton(
+              onPressed: () {
+                SystemNavigator.pop();
+              },
+              child: Text("Quit"),
+            )
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class Options extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Options"),
+      ),
+      body: Column(
+        children: <Widget>[
+          Text("Sound Mixer"),
+          Text("Screen Resolution"),
+          Text("Customize Ball"),
+          ElevatedButton(
+            child: Text("Go back"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
+      ),
     );
   }
 }
