@@ -5,7 +5,15 @@ import 'package:flame/game.dart';
 
 import 'components/tap_tennis_game.dart';
 
-main() {
-  TapTennisGame game = TapTennisGame();
-  runApp(GameWidget(game: game));
+class MyGame extends StatefulWidget {
+  @override
+  _MyGamePlay createState() => _MyGamePlay();
+}
+
+class _MyGamePlay extends State<MyGame> {
+  @override
+  Widget build(BuildContext context) {
+    TapTennisGame game = TapTennisGame();
+    return GameWidget(game: game);
+  }
 }
