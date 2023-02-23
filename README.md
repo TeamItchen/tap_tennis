@@ -21,6 +21,7 @@ The project is done using a relatively new technology called 'flutter'.
   - [ ] Create & Maintain core button functionality (Start game, options, exit)
   - [ ] Assign proper 'gaming-style' for buttons (as well as the background)
 - [ ] simple background and sprites
+  - [ ] On main title
 - [ ] add player & AI controls
 
 

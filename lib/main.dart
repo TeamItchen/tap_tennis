@@ -82,12 +82,16 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   final ButtonStyle btn_Style = ButtonStyle(
-    backgroundColor: MaterialStateProperty.all<Color>(
-        const Color.fromARGB(255, 94, 215, 12)),
-    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-    textStyle: MaterialStateProperty.all<TextStyle>(
-        const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-  );
+      backgroundColor: MaterialStateProperty.all<Color>(
+          const Color.fromARGB(255, 94, 215, 12)),
+      foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+      textStyle: MaterialStateProperty.all<TextStyle>(const TextStyle(
+          fontSize: 24, fontWeight: FontWeight.bold, fontFamily: "Monospace")),
+      shape: MaterialStateProperty.all<OutlinedBorder>(
+        RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ));
 
   @override
   Widget build(BuildContext context) {
@@ -121,7 +125,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // center the children vertically; the main axis here is the vertical
           // axis because Columns are vertical (the cross axis would be
           // horizontal).
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
             const Text(
               "Ponger 2D",
