@@ -18,10 +18,12 @@ The project is done using a relatively new technology called 'flutter'.
 ### V1
 
 - [ ] Main Page draft completed
-  - [ ] Create & Maintain core button functionality (Start game, options, exit)
-  - [ ] Assign proper 'gaming-style' for buttons (as well as the background)
+  - [x] Create & Maintain core button functionality (Start game, options, exit)
+  - [x] Assign proper 'gaming-style' for buttons (as well as the background)
+  - [ ] Implement settings
+  - [ ] Implement quitting scenario
 - [ ] simple background and sprites
-  - [ ] On main title
+  - [ ] On main title put paddles side-to-side on the main title to symbolise it
 - [ ] add player & AI controls
 
 
