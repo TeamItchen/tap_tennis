@@ -2,6 +2,7 @@ import 'dart:math';
 
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:tap_tennis/play.dart' as game_page;
@@ -20,33 +21,33 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Flutter Demo',
-        theme: ThemeData(
-          // This is the theme of your application.
-          //
-          // Try running your application with "flutter run". You'll see the
-          // application has a blue toolbar. Then, without quitting the app, try
-          // changing the primarySwatch below to Colors.green and then invoke
-          // "hot reload" (press "r" in the console where you ran "flutter run",
-          // or simply save your changes to "hot reload" in a Flutter IDE).
-          // Notice that the counter didn't reset back to zero; the application
-          // is not restarted.
-          primarySwatch: Colors.blue,
-        ),
-				home: game_page.main(),
-        // home: FutureBuilder(
-        //     future: _fbApp,
-        //     builder: (context, snapshot) {
-        //       if (snapshot.hasError) {
-        //         print("You have an error! ${snapshot.error.toString()}");
-        //         return Text("Something went wrong!");
-        //       } else if (snapshot.hasData) {
-        //         return MyHomePage(title: 'Flutter Demo Home Page');
-        //       } else {
-        //         return Center(child: CircularProgressIndicator());
-        //       }
-        //     })
-						);
+      title: 'Ponger 2D',
+      theme: ThemeData(
+        // This is the theme of your application.
+        //
+        // Try running your application with "flutter run". You'll see the
+        // application has a blue toolbar. Then, without quitting the app, try
+        // changing the primarySwatch below to Colors.green and then invoke
+        // "hot reload" (press "r" in the console where you ran "flutter run",
+        // or simply save your changes to "hot reload" in a Flutter IDE).
+        // Notice that the counter didn't reset back to zero; the application
+        // is not restarted.
+        primarySwatch: Colors.blue,
+      ),
+      home: game_page.main(),
+      // home: FutureBuilder(
+      //     future: _fbApp,
+      //     builder: (context, snapshot) {
+      //       if (snapshot.hasError) {
+      //         print("You have an error! ${snapshot.error.toString()}");
+      //         return Text("Something went wrong!");
+      //       } else if (snapshot.hasData) {
+      //         return MyHomePage(title: 'Flutter Demo Home Page');
+      //       } else {
+      //         return Center(child: CircularProgressIndicator());
+      //       }
+      //     })
+    );
   }
 }
 
@@ -69,20 +70,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
+/*  void _incrementCounter() {
     DatabaseReference _testRef = FirebaseDatabase.instance.ref().child("test");
     _testRef.set("Hello World ${Random().nextInt(100)}");
-    setState(() {
-      // This call to setState tells the Flutter framework that something has
-      // changed in this State, which causes it to rerun the build method below
-      // so that the display can reflect the updated values. If we changed
-      // _counter without calling setState(), then the build method would not be
-      // called again, and so nothing would appear to happen.
-      _counter++;
-    });
-  }
+    setState(() {});
+  }*/
+
+  final ButtonStyle btn_Style = ButtonStyle(
+    backgroundColor: MaterialStateProperty.all<Color>(
+        const Color.fromARGB(255, 94, 215, 12)),
+    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+    textStyle: MaterialStateProperty.all<TextStyle>(
+        const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -119,20 +119,60 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             const Text(
-              'You have pushed the button this many times:',
+              "Ponger 2D",
+              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
             ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headlineMedium,
-            ),
+            ElevatedButton(
+                style: btn_Style,
+                onPressed: () {
+                  game_page.main();
+                },
+                child: const Text("Start Game")),
+            ElevatedButton(
+                style: btn_Style,
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => const Options()),
+                  );
+                },
+                child: const Text("Options")),
+            ElevatedButton(
+              style: btn_Style,
+              onPressed: () {
+                SystemNavigator.pop();
+              },
+              child: const Text("Quit"),
+            )
           ],
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
+    );
+  }
+}
+
+class Options extends StatelessWidget {
+  const Options({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Options"),
+      ),
+      body: Column(
+        children: <Widget>[
+          const Text("Sound Mixer"),
+          const Text("Screen Resolution"),
+          const Text("Customize Ball"),
+          ElevatedButton(
+            child: const Text("Go back"),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          )
+        ],
+      ),
     );
   }
 }
