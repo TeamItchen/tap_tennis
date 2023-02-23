@@ -9,5 +9,3 @@ main() {
   TapTennisGame game = TapTennisGame();
   runApp(GameWidget(game: game));
 }
-
-
