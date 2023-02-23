@@ -18,10 +18,10 @@ The project is done using a relatively new technology called 'flutter'.
 ### V1
 
 - [ ] Main Page draft completed
-      -- [ ] Create & Maintain core button functionality (Start game, options, exit)
-      -- [ ] Assign proper 'gaming-style' for buttons (as well as the background)
-- [ ] simple background and sprites (gameplay page)
-      -- [ ] 
+  - [ ] Create & Maintain core button functionality (Start game, options, exit)
+  - [ ] Assign proper 'gaming-style' for buttons (as well as the background)
+- [ ] simple background and sprites
+- [ ] add player & AI controls
 
 
 - [Our Specification & Design Document can be found here](https://portdotacdotuk-my.sharepoint.com/:b:/g/personal/up2052662_port_ac_uk/EWcdtofwmI9Klo27rd-pHp4BktES1mLWkKIyemtzY7tT0w?e=9GwPfd)
