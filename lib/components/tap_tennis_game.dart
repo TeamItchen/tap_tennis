@@ -7,7 +7,7 @@ class TapTennisGame extends FlameGame {
   @override
   Future<void> onLoad() async {
     print(size);
-    Paddle playerPaddle = Paddle(position: Vector2(size[0] - 75, 150));
+    Paddle playerPaddle = Paddle(position: Vector2(size[0] - 100, 150));
     add(playerPaddle);
 
     Paddle computerPaddle = Paddle(position: Vector2(0, 150));
