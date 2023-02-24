@@ -57,6 +57,16 @@ dev_dependencies:
 flutter:
   assets:
     - assets/
+  
+  fonts:
+  - family: FuturaBook    
+    fonts:
+      - asset: assets/fonts/futura_book_regular.otf
+
+  - family: AdamCGPro
+    fonts:
+      - asset: assets/fonts/adam_cg_pro.otf
+
 
   #fonts:
     #- family: FuturaBook    
