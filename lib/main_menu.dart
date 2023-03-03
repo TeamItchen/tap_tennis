@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:tap_tennis/colours.dart' as colours;
 import 'package:tap_tennis/play.dart' as play_page;
 import 'package:tap_tennis/options.dart' as options_page;
+import 'package:tap_tennis/leaderboard.dart' as leaderboard_page;
 
 class MainMenu extends StatelessWidget {
   final ButtonStyle btn_Style = ButtonStyle(
@@ -28,6 +29,8 @@ class MainMenu extends StatelessWidget {
               "Tap Tennis",
               style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
             ),
+
+						//PLAY BUTTON
             ElevatedButton(
                 style: btn_Style,
                 onPressed: () {
@@ -37,10 +40,14 @@ class MainMenu extends StatelessWidget {
                   );
                 },
                 child: const Text("Start Game")),
+
+						//OPTIONS & LB BUTTONS
             Row(
               crossAxisAlignment: CrossAxisAlignment.center,
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+
+								//OPTIONS BUTTON
                 ElevatedButton(
                     style: btn_Style,
                     onPressed: () {
@@ -51,13 +58,18 @@ class MainMenu extends StatelessWidget {
                       );
                     },
                     child: const Text("Options")),
+
+								//LEADERBOARD BUTTON
                 ElevatedButton(
-                  style: btn_Style,
-                  onPressed: () {
-                    SystemNavigator.pop();
-                  },
-                  child: const Text("Quit"),
-                )
+                    style: btn_Style,
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => leaderboard_page.Leaderboard()),
+                      );
+                    },
+                    child: const Text("Leadboard")),
               ],
             )
           ],
