@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 
-class Leaderboard extends StatelessWidget {
+class Options extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Leaderboard"),
+        title: Text("Options"),
       ),
       body: Column(
         children: <Widget>[
-          ElevatedButton.icon(
-            icon: Icon(Icons.download),
-            label: Text(""),
+          const Text("Sound Mixer"),
+          const Text("Screen Resolution"),
+          const Text("Customize Ball"),
+          ElevatedButton(
+            child: const Text("Back"),
             onPressed: () {
               Navigator.pop(context);
             },
