@@ -60,8 +60,7 @@ class MainMenu extends StatelessWidget {
                           width: width / 3.65,
                           child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                  backgroundColor:
-                                      colours.Palette.charcoal,
+                                  backgroundColor: colours.Palette.charcoal,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30))),
                               onPressed: () {
@@ -96,7 +95,8 @@ class MainMenu extends StatelessWidget {
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) =>
-                                          leaderboard_page.Leaderboard()),
+                                          const leaderboard_page.Leaderboard(
+                                              title: "")),
                                 );
                               },
                               child: Image.asset(

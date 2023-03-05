@@ -17,10 +17,7 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
@@ -28,10 +25,7 @@ class DefaultFirebaseOptions {
       case TargetPlatform.iOS:
         return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -49,11 +43,22 @@ class DefaultFirebaseOptions {
     }
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyDlE2wKPWZ99DD2KGqcVeXYMPe_cozE8Ts',
+    appId: '1:652972449352:web:58c1471a80f7b367abc27d',
+    messagingSenderId: '652972449352',
+    projectId: 'tap-tennis',
+    authDomain: 'tap-tennis.firebaseapp.com',
+    databaseURL: 'https://tap-tennis-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'tap-tennis.appspot.com',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyDOvTaI4pEe9TOZHq_k_YCrD-q_ws_9psQ',
     appId: '1:652972449352:android:25ce205144f170ababc27d',
     messagingSenderId: '652972449352',
     projectId: 'tap-tennis',
+    databaseURL: 'https://tap-tennis-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'tap-tennis.appspot.com',
   );
 
@@ -62,6 +67,18 @@ class DefaultFirebaseOptions {
     appId: '1:652972449352:ios:500c02bfb8affb50abc27d',
     messagingSenderId: '652972449352',
     projectId: 'tap-tennis',
+    databaseURL: 'https://tap-tennis-default-rtdb.europe-west1.firebasedatabase.app',
+    storageBucket: 'tap-tennis.appspot.com',
+    iosClientId: '652972449352-crp13tgsatdhth52vp8nd56bn6hign4e.apps.googleusercontent.com',
+    iosBundleId: 'com.example.tapTennis',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDzK-cSKNVGQPmOCVUZhPXFRqiJcnDGElM',
+    appId: '1:652972449352:ios:500c02bfb8affb50abc27d',
+    messagingSenderId: '652972449352',
+    projectId: 'tap-tennis',
+    databaseURL: 'https://tap-tennis-default-rtdb.europe-west1.firebasedatabase.app',
     storageBucket: 'tap-tennis.appspot.com',
     iosClientId: '652972449352-crp13tgsatdhth52vp8nd56bn6hign4e.apps.googleusercontent.com',
     iosBundleId: 'com.example.tapTennis',
