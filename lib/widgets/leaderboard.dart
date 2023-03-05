@@ -1,3 +1,4 @@
+import 'package:firebase_database/ui/firebase_animated_list.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:tap_tennis/firebase_options.dart';
@@ -24,11 +25,19 @@ class _LeaderboardState extends State<Leaderboard> {
     super.dispose();
   }
 
+  final DatabaseReference lbRef = FirebaseDatabase.instance.ref("Leaderboard");
+
   //Submit data to the database
-  _submitData(userName, score) {
-    DatabaseReference testRef = FirebaseDatabase.instance.ref().child(userName);
-    testRef.set(int.parse(score));
+  _submitData(nickName, score) {
+    lbRef.child(nickName).set({'Name': nickName, 'Score': int.parse(score)});
   }
+
+  //Retrieve data from the database
+  // void printFirebase() {
+  //   lbRef.once().then((DataSnapshot snapshot) {
+  //     print('Data : ${snapshot.value}');
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -59,7 +68,7 @@ class _LeaderboardState extends State<Leaderboard> {
             onPressed: () {
               _submitData(nicknameSetter.text, scoreSetter.text);
             },
-          ),
+          )
         ],
       ),
     );
