@@ -9,11 +9,11 @@ class Options extends StatelessWidget {
       ),
       body: Column(
         children: <Widget>[
-          Text("Sound Mixer"),
-          Text("Screen Resolution"),
-          Text("Customize Ball"),
+          const Text("Sound Mixer"),
+          const Text("Screen Resolution"),
+          const Text("Customize Ball"),
           ElevatedButton(
-            child: Text("Go back"),
+            child: const Text("Back"),
             onPressed: () {
               Navigator.pop(context);
             },

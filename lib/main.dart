@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
-import 'package:tap_tennis/main_menu.dart' as menu_page;
+import 'package:tap_tennis/widgets/main_menu.dart' as menu_page;
 
 
 Future<void> main() async {
@@ -19,6 +19,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+		SystemChrome.setPreferredOrientations([
+        DeviceOrientation.landscapeLeft,
+        DeviceOrientation.landscapeRight,
+      ]);
     return MaterialApp(
 			debugShowCheckedModeBanner: false,
       title: 'Pong',

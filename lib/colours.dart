@@ -66,18 +66,18 @@ class Palette {
   );
 
   static const MaterialColor playButtonGreen = MaterialColor(
-    0xff00D187,
+    0xff5ed70c,
     <int, Color>{
-      50: Color(0xff00D187),
-      100: Color(0xff00D187),
-      200: Color(0xff00D187),
-      300: Color(0xff00D187),
-      400: Color(0xff00D187),
-      500: Color(0xff00D187),
-      600: Color(0xff00D187),
-      700: Color(0xff00D187),
-      800: Color(0xff00D187),
-      900: Color(0xff00D187),
+      50: Color(0xff5ed70c),
+      100: Color(0xff5ed70c),
+      200: Color(0xff5ed70c),
+      300: Color(0xff5ed70c),
+      400: Color(0xff5ed70c),
+      500: Color(0xff5ed70c),
+      600: Color(0xff5ed70c),
+      700: Color(0xff5ed70c),
+      800: Color(0xff5ed70c),
+      900: Color(0xff5ed70c),
     },
   );
 
