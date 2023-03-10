@@ -1,7 +1,7 @@
-import 'package:firebase_database/ui/firebase_animated_list.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:firebase_database/firebase_database.dart';
-import 'package:tap_tennis/firebase_options.dart';
 import 'package:firebase_core/firebase_core.dart';
 
 class Leaderboard extends StatefulWidget {
@@ -13,31 +13,53 @@ class Leaderboard extends StatefulWidget {
 }
 
 class _LeaderboardState extends State<Leaderboard> {
+  //Initialise Firebase
   final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
+
+  //Reference to the Firebase Database
+  final DatabaseReference _lbRef = FirebaseDatabase.instance.ref("Leaderboard");
+  late StreamSubscription _dataStream;
+
+  //List for storing leaderboard data from database
+  List leaderboard = [];
+
+  //Create data controllers for input boxes
   final TextEditingController nicknameSetter = TextEditingController();
   final TextEditingController scoreSetter = TextEditingController();
 
-  //Clean up the controller when the widget is disposed.
+  //Run listener for database changes
   @override
-  void dispose() {
-    nicknameSetter.dispose();
-    scoreSetter.dispose();
-    super.dispose();
+  void initState() {
+    super.initState();
+    _retrieveData();
   }
 
-  final DatabaseReference lbRef = FirebaseDatabase.instance.ref("Leaderboard");
+  //Listen for database changes and retrieve data
+  void _retrieveData() {
+    _dataStream = _lbRef.onValue.listen((event) {
+      final leaderboardData =
+          Map<String, Map>.from(event.snapshot.value as Map);
+
+      //Format data as a list
+      for (int i = 0; i < leaderboardData.length; i++) {
+        final userData = leaderboardData.values.elementAt(i);
+        final nickName = userData.values.elementAt(1) as String;
+        final score = userData.values.elementAt(0) as int;
+        leaderboard.add(MapEntry(nickName, score));
+      }
+
+      //Sort leaderboard data in decsending order by score
+      leaderboard.sort((a, b) => b.value.compareTo(a.value));
+
+			//Refresh the widget so that the new data is displayed
+      setState(() {});
+    });
+  }
 
   //Submit data to the database
   _submitData(nickName, score) {
-    lbRef.child(nickName).set({'Name': nickName, 'Score': int.parse(score)});
+    _lbRef.child(nickName).set({'Name': nickName, 'Score': int.parse(score)});
   }
-
-  //Retrieve data from the database
-  // void printFirebase() {
-  //   lbRef.once().then((DataSnapshot snapshot) {
-  //     print('Data : ${snapshot.value}');
-  //   });
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -68,9 +90,28 @@ class _LeaderboardState extends State<Leaderboard> {
             onPressed: () {
               _submitData(nicknameSetter.text, scoreSetter.text);
             },
-          )
+          ),
+          Column(children: [
+            for (var name in leaderboard)
+              Text(name.key + " " + name.value.toString())
+          ])
         ],
       ),
     );
+  }
+
+  //When widget gets destroyed, stop listening for database changes
+  @override
+  void deactivate() {
+    _dataStream.cancel();
+    super.deactivate();
+  }
+
+  //When widget is disposed, clean up controllers
+  @override
+  void dispose() {
+    nicknameSetter.dispose();
+    scoreSetter.dispose();
+    super.dispose();
   }
 }
