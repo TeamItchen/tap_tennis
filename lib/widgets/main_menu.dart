@@ -38,7 +38,7 @@ class MainMenu extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (context) => play_page.main()),
+                                  builder: (context) => play_page.createGameWidget()),
                             );
                           },
                           child: Image.asset("assets/images/icons/Play.png",

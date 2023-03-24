@@ -6,7 +6,12 @@ import 'package:flame/game.dart';
 import '/components/tap_tennis_game.dart';
 
 main() {
+  runApp(createGameWidget());
+}
+
+Widget createGameWidget()
+{
   TapTennisGame game = TapTennisGame();
-	Flame.device.fullScreen();
-  runApp(GameWidget(game: game));
+  Flame.device.fullScreen(); // todo-sam: have stateful?
+  return GameWidget(game: game);
 }
