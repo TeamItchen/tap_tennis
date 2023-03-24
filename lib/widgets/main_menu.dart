@@ -41,7 +41,7 @@ class MainMenu extends StatelessWidget {
                                   builder: (context) => play_page.main()),
                             );
                           },
-                          child: Image.asset("images/icons/Play.png",
+                          child: Image.asset("assets/images/icons/Play.png",
                               scale: 25)))),
 
               //OPTIONS & LB BUTTONS
@@ -72,7 +72,7 @@ class MainMenu extends StatelessWidget {
                                 );
                               },
                               child: Image.asset(
-                                  "images/icons/Settings.png",
+                                  "assets/images/icons/Settings.png",
                                   scale: 25)))),
 
                   //LEADERBOARD BUTTON
@@ -100,7 +100,7 @@ class MainMenu extends StatelessWidget {
                                 );
                               },
                               child: Image.asset(
-                                  "images/icons/Leaderboard.png",
+                                  "assets/images/icons/Leaderboard.png",
                                   scale: 25))))
                 ],
               )
