@@ -9,8 +9,7 @@ main() {
   runApp(createGameWidget());
 }
 
-Widget createGameWidget()
-{
+Widget createGameWidget() {
   TapTennisGame game = TapTennisGame();
   Flame.device.fullScreen(); // todo-sam: have stateful?
   return GameWidget(game: game);
