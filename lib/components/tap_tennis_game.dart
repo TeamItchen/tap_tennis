@@ -1,26 +1,32 @@
-import 'dart:io';
-import 'package:flame/src/gestures/detectors.dart';
-import 'package:flame/collisions.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame/components.dart';
-import 'package:flutter/material.dart';
 import 'package:tap_tennis/components/paddle.dart';
+import 'package:tap_tennis/components/ball.dart';
 
 class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
+  //Sprites
   Paddle playerPaddle = Paddle();
   Paddle computerPaddle = Paddle();
+  Ball ball = Ball();
 
+  //Game variables
   String compDirection = "down";
   String playerDirection = "stop";
+  String ballXDirection = "right";
+  String ballYDirection = "up";
   double paddleSpeed = 2;
+  double ballSpeed = 2;
+  bool paddleHit = false;
 
+  //Method to show whether a paddle has hit the ball
+  paddleHitBall(bool hitBall) {
+    paddleHit = hitBall;
+  }
+
+  //Load game assets
   @override
   Future<void> onLoad() async {
-    print(size);
     await super.onLoad();
-
-    //add(ScreenHitbox());
 
     playerPaddle.position = Vector2(size[0] - 50, 150);
     add(playerPaddle);
@@ -28,18 +34,60 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     computerPaddle.position = Vector2(50, 150);
     add(computerPaddle);
 
+    ball.position = Vector2(size[0] / 2, size[1] / 2);
+    add(ball);
+
     //Paddle placement reflects screen size, but only on refresh-
     //Need to implement an auto refresh - 09/02/2023
-    @override
-    update(double dt) {
-      super.update(dt);
-      playerPaddle.position = Vector2(size[0] - 75, 150);
-    }
+    // @override
+    // update(double dt) {
+    //   super.update(dt);
+    //   playerPaddle.position = Vector2(size[0] - 75, 150);
+    // }
   }
 
+  //Main game controls
   @override
   update(double dt) {
     super.update(dt);
+
+    //Movement X options for ball
+    switch (ballXDirection) {
+      case "right":
+        ball.x += ballSpeed;
+        break;
+      case "left":
+        ball.x -= ballSpeed;
+        break;
+    }
+
+    //Movement Y options for ball
+    switch (ballYDirection) {
+      case "down":
+        ball.y += ballSpeed;
+        break;
+      case "up":
+        ball.y -= ballSpeed;
+        break;
+    }
+
+    //Ball movement code
+    if (ball.x <= 75 && paddleHit == true) {
+      ballXDirection = "right";
+    }
+    if (ball.x >= size[0] - 75 && paddleHit == true) {
+      ballXDirection = "left";
+    }
+    if (ball.y > size[1] - 25) {
+      ballYDirection = "up";
+    }
+    if (ball.y < 0) {
+      ballYDirection = "down";
+    }
+
+    /*Returns paddleHit back to false after the ball has hit the paddle so that
+		the game can detect when the ball has passed a paddle after the first move.*/
+    paddleHit = false;
 
     //Movement options for computer paddle
     switch (compDirection) {
@@ -85,7 +133,6 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   @override
   void onTapDown(TapDownInfo info) {
     var tapCoordinates = info.eventPosition.game;
-    print("Press ${tapCoordinates.y}");
 
     if (tapCoordinates.y > size[1] / 2) {
       playerDirection = "down";
