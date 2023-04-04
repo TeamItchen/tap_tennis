@@ -1,13 +1,16 @@
+import 'dart:io';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:tap_tennis/components/paddle.dart';
 import 'package:tap_tennis/components/ball.dart';
+import 'package:tap_tennis/components/score.dart';
 
 class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   //Sprites
   Paddle playerPaddle = Paddle();
   Paddle computerPaddle = Paddle();
   Ball ball = Ball();
+  Score scoreCounter = Score();
 
   //Game variables
   String compDirection = "down";
@@ -17,10 +20,25 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   double paddleSpeed = 2;
   double ballSpeed = 2;
   bool paddleHit = false;
+  int score = 0;
+  bool _cooldown = false;
 
   //Method to show whether a paddle has hit the ball
   paddleHitBall(bool hitBall) {
     paddleHit = hitBall;
+  }
+
+  //Method that updates the player's score
+  updateScore() {
+    if (_cooldown == false) {
+      score += 1;
+    }
+    /*Cooldown of 1 second to prevent it triggering more than once when the ball
+		hits the paddle*/
+    _cooldown = true;
+    Future.delayed(Duration(seconds: 1), () {
+      _cooldown = false;
+    });
   }
 
   //Load game assets
@@ -36,6 +54,9 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
 
     ball.position = Vector2(size[0] / 2, size[1] / 2);
     add(ball);
+
+    scoreCounter.position = Vector2(size[0] / 2, 20);
+    add(scoreCounter);
 
     //Paddle placement reflects screen size, but only on refresh-
     //Need to implement an auto refresh - 09/02/2023
@@ -77,7 +98,12 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     }
     if (ball.x >= size[0] - 75 && paddleHit == true) {
       ballXDirection = "left";
+      updateScore();
     }
+    if (ball.x < -25 || ball.x > size[0] + 25) {
+      pauseEngine();
+    }
+
     if (ball.y > size[1] - 25) {
       ballYDirection = "up";
     }
@@ -92,10 +118,10 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     //Movement options for computer paddle
     switch (compDirection) {
       case "down":
-        computerPaddle.y += 1;
+        computerPaddle.y += 5;
         break;
       case "up":
-        computerPaddle.y -= 1;
+        computerPaddle.y -= 5;
         break;
     }
 
