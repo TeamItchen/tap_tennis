@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:tap_tennis/colours.dart' as colours;
 import 'package:tap_tennis/widgets/play.dart' as play_page;
 import 'package:tap_tennis/widgets/options.dart' as options_page;

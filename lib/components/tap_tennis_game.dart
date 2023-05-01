@@ -1,9 +1,9 @@
-import 'dart:io';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:tap_tennis/components/paddle.dart';
 import 'package:tap_tennis/components/ball.dart';
 import 'package:tap_tennis/components/score.dart';
+import 'package:tap_tennis/data_persistence.dart' as data;
 
 class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   //Sprites
@@ -17,8 +17,6 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   String playerDirection = "stop";
   String ballXDirection = "right";
   String ballYDirection = "up";
-  double paddleSpeed = 2;
-  double ballSpeed = 2;
   bool paddleHit = false;
   int score = 0;
   bool _cooldown = false;
@@ -36,7 +34,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     /*Cooldown of 1 second to prevent it triggering more than once when the ball
 		hits the paddle*/
     _cooldown = true;
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       _cooldown = false;
     });
   }
@@ -69,8 +67,10 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
 
   //Main game controls
   @override
-  update(double dt) {
+  update(double dt) async {
     super.update(dt);
+		double ballSpeed = await data.getBallSpeed();
+		double paddleSpeed = await data.getPaddleSpeed();
 
     //Movement X options for ball
     switch (ballXDirection) {

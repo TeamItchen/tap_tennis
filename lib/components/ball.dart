@@ -27,7 +27,7 @@ class Ball extends SpriteComponent
   void onCollision(intersectionPoints, other) {
     super.onCollision(intersectionPoints, other);
     if (other is Paddle) {
-      print("Paddle Hit");
+      //print("Paddle Hit");
       game.paddleHitBall(true);
     }
   }
