@@ -1,9 +1,11 @@
+import 'dart:math';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
 import 'package:tap_tennis/components/paddle.dart';
 import 'package:tap_tennis/components/ball.dart';
 import 'package:tap_tennis/components/score.dart';
 import 'package:tap_tennis/data_persistence.dart' as data;
+import 'package:tap_tennis/components/power_up_speed.dart';
 
 class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   //Sprites
@@ -11,6 +13,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   Paddle computerPaddle = Paddle();
   Ball ball = Ball();
   Score scoreCounter = Score();
+  PowerUpSpeed powerupspeed = PowerUpSpeed();
 
   //Game variables
   String compDirection = "down";
@@ -18,12 +21,22 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   String ballXDirection = "right";
   String ballYDirection = "up";
   bool paddleHit = false;
+  bool powerUpSpeedHit = false;
   int score = 0;
   bool _cooldown = false;
+  bool _powerUpExists = false;
 
   //Method to show whether a paddle has hit the ball
   paddleHitBall(bool hitBall) {
     paddleHit = hitBall;
+  }
+
+  //When powerUpSpeed is hit, the powerUpSpeedHit variable is set to true for 5 seconds
+  //Whilst this is true, setBallSpeed will alter the ball speed
+  void powerUpSpeedHitBall(bool hitBall) async {
+    powerUpSpeedHit = hitBall;
+    await Future.delayed(Duration(seconds: 5));
+    powerUpSpeedHit = !hitBall;
   }
 
   //Method that updates the player's score
@@ -31,12 +44,33 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     if (_cooldown == false) {
       score += 1;
     }
-    /*Cooldown of 1 second to prevent it triggering more than once when the ball
-		hits the paddle*/
+    //Cooldown of 1 second to prevent it triggering more than once when the ball hits the paddle
     _cooldown = true;
     Future.delayed(const Duration(seconds: 1), () {
       _cooldown = false;
     });
+  }
+
+  //Set Ball Speed
+  Future<double> setBallSpeed(powerUpSpeedHit) async {
+    double ballSpeed = await data.getBallSpeed();
+    if (powerUpSpeedHit == true) {
+      ballSpeed /= 4;
+    }
+    return ballSpeed;
+  }
+
+  //Random Power Up Spawner
+  Future<bool> powerUpSpawner(powerUpExists, sizeX, sizeY) async {
+    if (powerUpExists == false) {
+      Random random = new Random();
+      double powerUpX = (random.nextInt(sizeX.round() - 200) + 100).toDouble();
+      double powerUpY = (random.nextInt(sizeY.round() - 100) + 50).toDouble();
+      powerupspeed.position = Vector2(powerUpX, powerUpY);
+      add(powerupspeed);
+      powerUpExists = true;
+    }
+    return powerUpExists;
   }
 
   //Load game assets
@@ -55,22 +89,18 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
 
     scoreCounter.position = Vector2(size[0] / 2, 20);
     add(scoreCounter);
-
-    //Paddle placement reflects screen size, but only on refresh-
-    //Need to implement an auto refresh - 09/02/2023
-    // @override
-    // update(double dt) {
-    //   super.update(dt);
-    //   playerPaddle.position = Vector2(size[0] - 75, 150);
-    // }
   }
 
   //Main game controls
   @override
   update(double dt) async {
     super.update(dt);
-		double ballSpeed = await data.getBallSpeed();
-		double paddleSpeed = await data.getPaddleSpeed();
+
+    //Spawn power up if it doesn't exist
+    _powerUpExists = await powerUpSpawner(_powerUpExists, size[0], size[1]);
+
+    double ballSpeed = await setBallSpeed(powerUpSpeedHit);
+    double paddleSpeed = await data.getPaddleSpeed();
 
     //Movement X options for ball
     switch (ballXDirection) {
@@ -152,6 +182,12 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     }
     if (playerPaddle.y < 0) {
       playerDirection = "stop";
+    }
+
+    //P-UP
+    if (powerUpSpeedHit == true) {
+      powerupspeed.removeFromParent();
+      _powerUpExists = false;
     }
   }
 
