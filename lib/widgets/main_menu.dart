@@ -34,11 +34,7 @@ class MainMenu extends StatelessWidget {
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(30))),
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => play_page.createGameWidget()),
-                            );
+                            Navigator.pushNamed(context, '/play');
                           },
                           child: Image.asset("assets/images/icons/Play.png",
                               scale: 25)))),
@@ -63,12 +59,7 @@ class MainMenu extends StatelessWidget {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30))),
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          options_page.Options()),
-                                );
+                                Navigator.pushNamed(context, '/options');
                               },
                               child: Image.asset(
                                   "assets/images/icons/Settings.png",
@@ -90,13 +81,7 @@ class MainMenu extends StatelessWidget {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30))),
                               onPressed: () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          const leaderboard_page.Leaderboard(
-                                              title: "")),
-                                );
+                                Navigator.pushNamed(context, '/leaderboard');
                               },
                               child: Image.asset(
                                   "assets/images/icons/Leaderboard.png",

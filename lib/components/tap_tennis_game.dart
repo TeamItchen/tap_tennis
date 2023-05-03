@@ -42,7 +42,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     powerUpSpeedHit = hitBall;
     await Future.delayed(Duration(seconds: 5));
     powerUpSpeedHit = !hitBall;
-		_powerUpExists = false;
+    _powerUpExists = false;
   }
 
   //When poweruplength is hit, the powerUpLengthHit variable is set to true for 5 seconds
@@ -114,6 +114,8 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
 
     scoreCounter.position = Vector2(size[0] / 2, 20);
     add(scoreCounter);
+
+    overlays.add('DashboardOverlay');
   }
 
   //Main game controls
