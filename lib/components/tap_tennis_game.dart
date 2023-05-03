@@ -6,6 +6,7 @@ import 'package:tap_tennis/components/ball.dart';
 import 'package:tap_tennis/components/score.dart';
 import 'package:tap_tennis/data_persistence.dart' as data;
 import 'package:tap_tennis/components/power_up_speed.dart';
+import 'package:tap_tennis/components/power_up_length.dart';
 
 class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   //Sprites
@@ -13,7 +14,10 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   Paddle computerPaddle = Paddle();
   Ball ball = Ball();
   Score scoreCounter = Score();
+
   PowerUpSpeed powerupspeed = PowerUpSpeed();
+  PowerUpLength poweruplength = PowerUpLength();
+  late List powerUps = [powerupspeed, poweruplength];
 
   //Game variables
   String compDirection = "down";
@@ -22,6 +26,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   String ballYDirection = "up";
   bool paddleHit = false;
   bool powerUpSpeedHit = false;
+  bool powerUpLengthHit = false;
   int score = 0;
   bool _cooldown = false;
   bool _powerUpExists = false;
@@ -37,6 +42,16 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     powerUpSpeedHit = hitBall;
     await Future.delayed(Duration(seconds: 5));
     powerUpSpeedHit = !hitBall;
+		_powerUpExists = false;
+  }
+
+  //When poweruplength is hit, the powerUpLengthHit variable is set to true for 5 seconds
+  ////Whilst this is true, setPaddleLength will alter the paddle length
+  void powerUpLengthHitBall(bool hitBall) async {
+    powerUpLengthHit = hitBall;
+    await Future.delayed(const Duration(seconds: 5));
+    powerUpLengthHit = !hitBall;
+    _powerUpExists = false;
   }
 
   //Method that updates the player's score
@@ -60,14 +75,24 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     return ballSpeed;
   }
 
+  // Set Paddle length
+  Future<Vector2> setPaddleLength(powerUpLengthHit) async {
+    playerPaddle.size = Vector2(25, 100);
+    if (powerUpLengthHit == true) {
+      playerPaddle.size = Vector2(25, 150);
+    }
+    return playerPaddle.size;
+  }
+
   //Random Power Up Spawner
   Future<bool> powerUpSpawner(powerUpExists, sizeX, sizeY) async {
     if (powerUpExists == false) {
       Random random = new Random();
       double powerUpX = (random.nextInt(sizeX.round() - 200) + 100).toDouble();
       double powerUpY = (random.nextInt(sizeY.round() - 100) + 50).toDouble();
-      powerupspeed.position = Vector2(powerUpX, powerUpY);
-      add(powerupspeed);
+      var i = random.nextInt(powerUps.length);
+      powerUps[i].position = Vector2(powerUpX, powerUpY);
+      add(powerUps[i]);
       powerUpExists = true;
     }
     return powerUpExists;
@@ -101,6 +126,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
 
     double ballSpeed = await setBallSpeed(powerUpSpeedHit);
     double paddleSpeed = await data.getPaddleSpeed();
+    playerPaddle.size = await setPaddleLength(powerUpLengthHit);
 
     //Movement X options for ball
     switch (ballXDirection) {
@@ -187,7 +213,10 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     //P-UP
     if (powerUpSpeedHit == true) {
       powerupspeed.removeFromParent();
-      _powerUpExists = false;
+    }
+
+    if (powerUpLengthHit == true) {
+      poweruplength.removeFromParent();
     }
   }
 
