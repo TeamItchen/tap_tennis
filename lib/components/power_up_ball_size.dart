@@ -25,7 +25,7 @@ class PowerUpBallSize extends SpriteComponent
   void onCollision(intersectionPoints, other) {
     super.onCollision(intersectionPoints, other);
     if (other is Ball) {
-      game.powerUpBigHitBall(false);
+      game.powerUpBigHitBall(true);
     }
   }
 }

@@ -17,7 +17,7 @@ class PowerUpPaddleSpeed extends SpriteComponent
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    sprite = await gameRef.loadSprite(".png");
+    sprite = await gameRef.loadSprite("speedUp.png");
     size = Vector2(50, 50);
     add(CircleHitbox());
   }
@@ -27,7 +27,7 @@ class PowerUpPaddleSpeed extends SpriteComponent
   void onCollision(intersectionPoints, other) {
     super.onCollision(intersectionPoints, other);
     if (other is Ball) {
-      // game.powerUpSpeedHitBall(true);
+      game.powerUpPadSpeedBall(true);
     }
   }
 }

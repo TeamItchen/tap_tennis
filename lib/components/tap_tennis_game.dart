@@ -115,16 +115,16 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   Future<double> setPaddleSpeed(powerUpLengthHit) async {
     double paddlespeed = await data.getPaddleSpeed();
     if (powerUpLengthHit == true) {
-      playerPaddle.size = Vector2(25, 150);
+      paddlespeed *= 2;
     }
     return paddlespeed;
   }
 
   // Set ball size (setBallSize)
   Future<Vector2> setBallSize(hitDone) async {
-    ball.size = Vector2(50, 50);
+    ball.size = Vector2(25, 25);
     if (hitDone == true) {
-      ball.size = Vector2(100, 100);
+      ball.size = Vector2(50, 50);
     }
     return ball.size;
   }
@@ -203,7 +203,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
       ballXDirection = "right";
     }
     if (ball.x >= size[0] - 75 && paddleHit == true) {
-      ballXDirection = "left";
+      ballXDirection = "left"; //
       updateScore();
     }
     if (ball.x < -25 || ball.x > size[0] + 25) {
