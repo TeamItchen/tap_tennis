@@ -9,9 +9,7 @@ class Paddle extends SpriteComponent
     with HasGameRef<TapTennisGame>, CollisionCallbacks {
   Paddle({
     Vector2? position,
-  }) : super(position: position) {
-    debugMode = true;
-  }
+  }) : super(position: position);
 
 //Method setting the image file and size of sprite
   @override

@@ -1,13 +1,13 @@
 import 'package:flame/collisions.dart';
 import 'package:flame/components.dart';
-import 'package:tap_tennis/components/paddle.dart';
+import 'package:tap_tennis/components/ball.dart';
 import 'package:tap_tennis/components/tap_tennis_game.dart';
 
-/*Class which creates a Ball Sprite
-  Position coordinates are passed into it when a Ball object is created*/
-class Ball extends SpriteComponent
+/*Class which creates a Obstacle Speed Sprite
+  Position coordinates are passed into it when a Obstacle Speed object is created*/
+class ObstacleBallSize extends SpriteComponent
     with HasGameRef<TapTennisGame>, CollisionCallbacks {
-  Ball({
+  ObstacleBallSize({
     Vector2? position,
   }) : super(position: position);
 
@@ -15,18 +15,17 @@ class Ball extends SpriteComponent
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    sprite = await gameRef.loadSprite("Ball.png");
-    size = Vector2(25, 25);
+    sprite = await gameRef.loadSprite("ObstacleBallSize.png");
+    size = Vector2(50, 50);
     add(CircleHitbox());
   }
 
-//Collision Detection between Ball and Paddle
+  //Collision Detection between Ball and ObstacleSpeed
   @override
   void onCollision(intersectionPoints, other) {
     super.onCollision(intersectionPoints, other);
-    if (other is Paddle) {
-      //print("Paddle Hit");
-      game.paddleHitBall(true);
+    if (other is Ball) {
+      game.obstacleBallSizeHitBall(true);
     }
   }
 }

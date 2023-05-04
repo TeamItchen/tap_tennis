@@ -3,31 +3,29 @@ import 'package:flame/components.dart';
 import 'package:tap_tennis/components/ball.dart';
 import 'package:tap_tennis/components/tap_tennis_game.dart';
 
-/*Class which creates a Power Up Speed Sprite
-  Position coordinates are passed into it when a Power Up Speed object is created*/
-class PowerUpSpeed extends SpriteComponent
+/*Class which creates a Power Up Length Sprite
+  Position coordinates are passed into it when a Power Up Length object is created*/
+class PowerUpPaddleSize extends SpriteComponent
     with HasGameRef<TapTennisGame>, CollisionCallbacks {
-  PowerUpSpeed({
+  PowerUpPaddleSize({
     Vector2? position,
-  }) : super(position: position) {
-    debugMode = true;
-  }
+  }) : super(position: position);
 
 //Method setting the image file and size of sprite
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    sprite = await gameRef.loadSprite("PowerUpSpeed.png");
+    sprite = await gameRef.loadSprite("PowerUpPaddleSize.png");
     size = Vector2(50, 50);
     add(CircleHitbox());
   }
 
-  //Collision Detection between Ball and PowerUpSpeed
+  //Collision Detection between Ball and PowerUpLength
   @override
   void onCollision(intersectionPoints, other) {
     super.onCollision(intersectionPoints, other);
     if (other is Ball) {
-      game.powerUpSpeedHitBall(true);
+      game.powerUpPaddleSizeHitBall(true);
     }
   }
 }

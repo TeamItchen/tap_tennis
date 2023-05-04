@@ -10,7 +10,6 @@ class Score extends TextComponent with HasGameRef<game.TapTennisGame> {
     score = game.score.toString();
     positionType = PositionType.viewport;
     text = score;
-
   }
 
   @override

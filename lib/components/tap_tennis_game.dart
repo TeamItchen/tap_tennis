@@ -5,8 +5,14 @@ import 'package:tap_tennis/components/paddle.dart';
 import 'package:tap_tennis/components/ball.dart';
 import 'package:tap_tennis/components/score.dart';
 import 'package:tap_tennis/data_persistence.dart' as data;
-import 'package:tap_tennis/components/power_up_speed.dart';
-import 'package:tap_tennis/components/power_up_length.dart';
+import 'package:tap_tennis/components/power_up_ball_speed.dart';
+import 'package:tap_tennis/components/power_up_ball_size.dart';
+import 'package:tap_tennis/components/power_up_paddle_speed.dart';
+import 'package:tap_tennis/components/power_up_paddle_size.dart';
+import 'package:tap_tennis/components/obstacle_ball_speed.dart';
+import 'package:tap_tennis/components/obstacle_ball_size.dart';
+import 'package:tap_tennis/components/obstacle_paddle_speed.dart';
+import 'package:tap_tennis/components/obstacle_paddle_size.dart';
 import 'package:tap_tennis/score_submitter.dart' as submit;
 
 int score = 0;
@@ -18,20 +24,51 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   Ball ball = Ball();
   Score scoreCounter = Score();
 
-  PowerUpSpeed powerupspeed = PowerUpSpeed();
-  PowerUpLength poweruplength = PowerUpLength();
-  late List powerUps = [powerupspeed, poweruplength];
+  PowerUpBallSpeed powerupballspeed = PowerUpBallSpeed();
+  PowerUpBallSize powerupballsize = PowerUpBallSize();
+  PowerUpPaddleSpeed poweruppaddlespeed = PowerUpPaddleSpeed();
+  PowerUpPaddleSize poweruppaddlesize = PowerUpPaddleSize();
+  late List powerUps = [
+    powerupballspeed,
+    powerupballsize,
+    poweruppaddlespeed,
+    poweruppaddlesize
+  ];
+
+  ObstacleBallSpeed obstacleballspeed = ObstacleBallSpeed();
+  ObstacleBallSize obstacleballsize = ObstacleBallSize();
+  ObstaclePaddleSpeed obstaclepaddlespeed = ObstaclePaddleSpeed();
+  ObstaclePaddleSize obstaclepaddlesize = ObstaclePaddleSize();
+  late List obstacles = [
+    obstacleballspeed,
+    obstacleballsize,
+    obstaclepaddlespeed,
+    obstaclepaddlesize
+  ];
 
   //Game variables
   String compDirection = "down";
   String playerDirection = "stop";
   String ballXDirection = "right";
   String ballYDirection = "up";
+
   bool paddleHit = false;
-  bool powerUpSpeedHit = false;
-  bool powerUpLengthHit = false;
   bool _cooldown = false;
+
+  bool powerUpBallSpeedHit = false;
+  bool powerUpBallSizeHit = false;
+  bool powerUpPaddleSpeedHit = false;
+  bool powerUpPaddleSizeHit = false;
   bool _powerUpExists = false;
+
+  bool obstacleBallSpeedHit = false;
+  bool obstacleBallSizeHit = false;
+  bool obstaclePaddleSpeedHit = false;
+  bool obstaclePaddleSizeHit = false;
+  bool _obstacleExists = false;
+
+  bool powerUpsActive = false;
+  bool obstaclesActive = false;
 
   //Method to show whether a paddle has hit the ball
   paddleHitBall(bool hitBall) {
@@ -40,20 +77,74 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
 
   //When powerUpSpeed is hit, the powerUpSpeedHit variable is set to true for 5 seconds
   //Whilst this is true, setBallSpeed will alter the ball speed
-  void powerUpSpeedHitBall(bool hitBall) async {
-    powerUpSpeedHit = hitBall;
+  void powerUpBallSpeedHitBall(bool hitBall) async {
+    powerUpBallSpeedHit = hitBall;
     await Future.delayed(Duration(seconds: 5));
-    powerUpSpeedHit = !hitBall;
+    powerUpBallSpeedHit = !hitBall;
+    _powerUpExists = false;
+  }
+
+  //When powerUpSize is hit, the powerUpSizeHit variable is set to true for 5 seconds
+  //Whilst this is true, setBallSize will alter the ball speed
+  void powerUpBallSizeHitBall(bool hitBall) async {
+    powerUpBallSizeHit = hitBall;
+    await Future.delayed(Duration(seconds: 5));
+    powerUpBallSizeHit = !hitBall;
+    _powerUpExists = false;
+  }
+
+  //When powerUpSpeed is hit, the powerUpSpeedHit variable is set to true for 5 seconds
+  //Whilst this is true, setBallSpeed will alter the ball speed
+  void powerUpPaddleSpeedHitBall(bool hitBall) async {
+    powerUpPaddleSpeedHit = hitBall;
+    await Future.delayed(Duration(seconds: 5));
+    powerUpPaddleSpeedHit = !hitBall;
     _powerUpExists = false;
   }
 
   //When poweruplength is hit, the powerUpLengthHit variable is set to true for 5 seconds
   ////Whilst this is true, setPaddleLength will alter the paddle length
-  void powerUpLengthHitBall(bool hitBall) async {
-    powerUpLengthHit = hitBall;
+  void powerUpPaddleSizeHitBall(bool hitBall) async {
+    powerUpPaddleSizeHit = hitBall;
     await Future.delayed(const Duration(seconds: 5));
-    powerUpLengthHit = !hitBall;
+    powerUpPaddleSizeHit = !hitBall;
     _powerUpExists = false;
+  }
+
+  //When obstacleSpeed is hit, the obstacleSpeedHit variable is set to true for 5 seconds
+  //Whilst this is true, setBallSpeed will alter the ball speed
+  void obstacleBallSpeedHitBall(bool hitBall) async {
+    obstacleBallSpeedHit = hitBall;
+    await Future.delayed(Duration(seconds: 5));
+    obstacleBallSpeedHit = !hitBall;
+    _obstacleExists = false;
+  }
+
+  //When obstacleSize is hit, the obstacleSizeHit variable is set to true for 5 seconds
+  //Whilst this is true, setBallSize will alter the ball speed
+  void obstacleBallSizeHitBall(bool hitBall) async {
+    obstacleBallSizeHit = hitBall;
+    await Future.delayed(Duration(seconds: 5));
+    obstacleBallSizeHit = !hitBall;
+    _obstacleExists = false;
+  }
+
+  //When obstacleSpeed is hit, the obstacleSpeedHit variable is set to true for 5 seconds
+  //Whilst this is true, setBallSpeed will alter the ball speed
+  void obstaclePaddleSpeedHitBall(bool hitBall) async {
+    obstaclePaddleSpeedHit = hitBall;
+    await Future.delayed(Duration(seconds: 5));
+    obstaclePaddleSpeedHit = !hitBall;
+    _obstacleExists = false;
+  }
+
+  //When obstaclelength is hit, the obstacleLengthHit variable is set to true for 5 seconds
+  ////Whilst this is true, setPaddleLength will alter the paddle length
+  void obstaclePaddleSizeHitBall(bool hitBall) async {
+    obstaclePaddleSizeHit = hitBall;
+    await Future.delayed(const Duration(seconds: 5));
+    obstaclePaddleSizeHit = !hitBall;
+    _obstacleExists = false;
   }
 
   //Method that updates the player's score
@@ -69,21 +160,68 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   //Set Ball Speed
-  Future<double> setBallSpeed(powerUpSpeedHit) async {
+  Future<double> setBallSpeed(powerUpBallSpeedHit, obstacleBallSpeedHit) async {
     double ballSpeed = await data.getBallSpeed();
-    if (powerUpSpeedHit == true) {
+    if (powerUpBallSpeedHit == true) {
       ballSpeed /= 4;
+    }
+    if (obstacleBallSpeedHit == true) {
+      ballSpeed *= 2;
     }
     return ballSpeed;
   }
 
-  // Set Paddle length
-  Future<Vector2> setPaddleLength(powerUpLengthHit) async {
+  //Set Ball Size
+  Future<Vector2> setBallSize(powerUpBallSizeHit, obstacleBallSizeHit) async {
+    double ballSpeed = await data.getBallSpeed();
+    ball.size = Vector2(25, 25);
+    if (powerUpBallSizeHit == true) {
+      ball.size.x += 25;
+      ball.size.y += 25;
+    }
+    if (obstacleBallSizeHit == true) {
+      ball.size.x -= 12.5;
+      ball.size.y -= 12.5;
+    }
+    return ball.size;
+  }
+
+  //Set Paddle Speed
+  Future<double> setPaddleSpeed(
+      powerUpPaddleSpeedHit, obstaclePaddleSpeedHit) async {
+    double paddleSpeed = await data.getPaddleSpeed();
+    if (powerUpPaddleSpeedHit == true) {
+      paddleSpeed *= 2;
+    }
+    if (obstaclePaddleSpeedHit == true) {
+      paddleSpeed /= 2;
+    }
+    return paddleSpeed;
+  }
+
+  //Set Paddle Size
+  Future<Vector2> setPaddleLength(
+      powerUpPaddleSizeHit, obstaclePaddleSizeHit) async {
     playerPaddle.size = Vector2(25, 100);
-    if (powerUpLengthHit == true) {
+    if (powerUpPaddleSizeHit == true) {
       playerPaddle.size = Vector2(25, 150);
     }
+    if (obstaclePaddleSizeHit == true) {
+      playerPaddle.size = Vector2(25, 50);
+    }
     return playerPaddle.size;
+  }
+
+  //Get Power-Ups Status
+  Future<bool> powerUpsStatus() async {
+    powerUpsActive = await data.getPowerUpsStatus();
+    return powerUpsActive;
+  }
+
+  //Get Obstacles Status
+  Future<bool> obstaclesStatus() async {
+    obstaclesActive = await data.getObstaclesStatus();
+    return obstaclesActive;
   }
 
   //Random Power Up Spawner
@@ -98,6 +236,20 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
       powerUpExists = true;
     }
     return powerUpExists;
+  }
+
+  //Random Obstacle Spawner
+  Future<bool> obstacleSpawner(obstacleExists, sizeX, sizeY) async {
+    if (obstacleExists == false) {
+      Random random = new Random();
+      double obstacleX = (random.nextInt(sizeX.round() - 200) + 100).toDouble();
+      double obstacleY = (random.nextInt(sizeY.round() - 100) + 50).toDouble();
+      var i = random.nextInt(obstacles.length);
+      obstacles[i].position = Vector2(obstacleX, obstacleY);
+      add(obstacles[i]);
+      obstacleExists = true;
+    }
+    return obstacleExists;
   }
 
   //Load game assets
@@ -127,12 +279,27 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   update(double dt) async {
     super.update(dt);
 
-    //Spawn power up if it doesn't exist
-    _powerUpExists = await powerUpSpawner(_powerUpExists, size[0], size[1]);
+    bool powerUpsActive = await data.getPowerUpsStatus();
+    bool obstaclesActive = await data.getObstaclesStatus();
 
-    double ballSpeed = await setBallSpeed(powerUpSpeedHit);
-    double paddleSpeed = await data.getPaddleSpeed();
-    playerPaddle.size = await setPaddleLength(powerUpLengthHit);
+    double ballSpeed =
+        await setBallSpeed(powerUpBallSpeedHit, obstacleBallSpeedHit);
+    double paddleSpeed =
+        await setPaddleSpeed(powerUpPaddleSpeedHit, obstaclePaddleSpeedHit);
+    ball.size = await setBallSize(powerUpBallSizeHit, obstacleBallSizeHit);
+    playerPaddle.size =
+        await setPaddleLength(powerUpPaddleSizeHit, obstaclePaddleSizeHit);
+
+    //Spawn power up if it doesn't exist and if they are enabled
+    if (powerUpsActive == true) {
+      _powerUpExists = await powerUpSpawner(_powerUpExists, size[0], size[1]);
+    }
+
+    //Spawn obstacle if it doesn't exist and if they are enabled
+    if (obstaclesActive == true) {
+      _obstacleExists =
+          await obstacleSpawner(_obstacleExists, size[0], size[1]);
+    }
 
     //Movement X options for ball
     switch (ballXDirection) {
@@ -155,10 +322,10 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     }
 
     //Ball movement code
-    if (ball.x <= 75 && paddleHit == true) {
+    if (ball.x <= (ball.size.x + 50) && paddleHit == true) {
       ballXDirection = "right";
     }
-    if (ball.x >= size[0] - 75 && paddleHit == true) {
+    if (ball.x >= size[0] - (ball.size.x + 50) && paddleHit == true) {
       ballXDirection = "left";
       updateScore();
     }
@@ -182,10 +349,10 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     //Movement options for computer paddle
     switch (compDirection) {
       case "down":
-        computerPaddle.y += 5;
+        computerPaddle.y += 25;
         break;
       case "up":
-        computerPaddle.y -= 5;
+        computerPaddle.y -= 25;
         break;
     }
 
@@ -211,20 +378,45 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     }
 
     //Player edge detection
-    if (playerPaddle.y > size[1] - 100) {
+    if (playerPaddle.y > size[1] - playerPaddle.size.y) {
       playerDirection = "stop";
     }
     if (playerPaddle.y < 0) {
       playerDirection = "stop";
     }
 
-    //P-UP
-    if (powerUpSpeedHit == true) {
-      powerupspeed.removeFromParent();
+    //Power-Up Sprite Removal On Hit
+    if (powerUpBallSpeedHit == true) {
+      powerupballspeed.removeFromParent();
     }
 
-    if (powerUpLengthHit == true) {
-      poweruplength.removeFromParent();
+    if (powerUpBallSizeHit == true) {
+      powerupballsize.removeFromParent();
+    }
+
+    if (powerUpPaddleSpeedHit == true) {
+      poweruppaddlespeed.removeFromParent();
+    }
+
+    if (powerUpPaddleSizeHit == true) {
+      poweruppaddlesize.removeFromParent();
+    }
+
+    //Obstacle Sprite Removal On Hit
+    if (obstacleBallSpeedHit == true) {
+      obstacleballspeed.removeFromParent();
+    }
+
+    if (obstacleBallSizeHit == true) {
+      obstacleballsize.removeFromParent();
+    }
+
+    if (obstaclePaddleSpeedHit == true) {
+      obstaclepaddlespeed.removeFromParent();
+    }
+
+    if (obstaclePaddleSizeHit == true) {
+      obstaclepaddlesize.removeFromParent();
     }
   }
 
