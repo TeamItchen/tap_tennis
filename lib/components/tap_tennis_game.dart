@@ -25,12 +25,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   PowerUpBallSize bigBall = PowerUpBallSize();
   PowerUpPaddleSpeed speedpaddle = PowerUpPaddleSpeed();
 
-  late List powerUps = [
-    powerupspeed,
-    poweruplength,
-    bigBall,
-    speedpaddle,
-  ];
+  late List powerUps = [powerupspeed, poweruplength, bigBall, speedpaddle];
 
   //Game variables
   String compDirection = "down";
