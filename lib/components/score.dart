@@ -1,13 +1,13 @@
 import 'package:flame/components.dart';
-import 'package:tap_tennis/components/tap_tennis_game.dart';
+import 'package:tap_tennis/components/tap_tennis_game.dart' as game;
 
-class Score extends TextComponent with HasGameRef<TapTennisGame> {
+class Score extends TextComponent with HasGameRef<game.TapTennisGame> {
   late String score;
 
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    score = gameRef.score.toString();
+    score = game.score.toString();
     positionType = PositionType.viewport;
     text = score;
 
@@ -16,7 +16,7 @@ class Score extends TextComponent with HasGameRef<TapTennisGame> {
   @override
   void update(double dt) {
     super.update(dt);
-    score = gameRef.score.toString();
+    score = game.score.toString();
     text = score;
   }
 }

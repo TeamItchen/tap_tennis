@@ -1,18 +1,20 @@
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:tap_tennis/colours.dart' as colours;
 import '../components/tap_tennis_game.dart';
+import 'package:tap_tennis/components/ball.dart';
 
 class Dashboard extends StatefulWidget {
   final TapTennisGame game;
   Dashboard({Key? key, required this.game}) : super(key: key);
+
+  bool gamePaused = false;
 
   @override
   _DashboardState createState() => _DashboardState();
 }
 
 class _DashboardState extends State<Dashboard> {
-  bool gamePaused = false;
-
   @override
   Widget build(BuildContext context) {
     double height = MediaQuery.of(context).size.height;
@@ -29,16 +31,16 @@ class _DashboardState extends State<Dashboard> {
             ),
             onPressed: () {
               setState(() {
-                gamePaused = true;
+                widget.gamePaused = true;
               });
               widget.game.pauseEngine();
             },
           ),
         ],
       ),
-      gamePaused == true
+      widget.gamePaused == true
           ? Container(
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 borderRadius: BorderRadius.all(Radius.circular(20)),
                 color: colours.Palette.charcoal,
               ),
@@ -76,7 +78,7 @@ class _DashboardState extends State<Dashboard> {
                                               BorderRadius.circular(30))),
                                   onPressed: () {
                                     setState(() {
-                                      gamePaused = false;
+                                      widget.gamePaused = false;
                                     });
                                     widget.game.resumeEngine();
                                   },
@@ -94,20 +96,19 @@ class _DashboardState extends State<Dashboard> {
                             child: ElevatedButton(
                               style: ElevatedButton.styleFrom(
                                   backgroundColor:
-                                      colours.Palette.quitButtonRed,
+                                      colours.Palette.aboutButtonBlue,
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(30))),
                               onPressed: () {
-                                Navigator.pushNamed(context, '/');
+                                Navigator.pop(context);
                               },
-                              child: Image.asset(
-                                      "assets/images/icons/Close.png",
-                                      scale: 25),
+                              child: Image.asset("assets/images/icons/Home.png",
+                                  scale: 25),
                             ),
                           ))
                     ],
                   )))
-          : Container()
+          : Container(),
     ]);
   }
 }

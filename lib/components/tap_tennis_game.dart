@@ -7,6 +7,9 @@ import 'package:tap_tennis/components/score.dart';
 import 'package:tap_tennis/data_persistence.dart' as data;
 import 'package:tap_tennis/components/power_up_speed.dart';
 import 'package:tap_tennis/components/power_up_length.dart';
+import 'package:tap_tennis/score_submitter.dart' as submit;
+
+int score = 0;
 
 class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   //Sprites
@@ -27,7 +30,6 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   bool paddleHit = false;
   bool powerUpSpeedHit = false;
   bool powerUpLengthHit = false;
-  int score = 0;
   bool _cooldown = false;
   bool _powerUpExists = false;
 
@@ -103,6 +105,8 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   Future<void> onLoad() async {
     await super.onLoad();
 
+    score = 0;
+
     playerPaddle.position = Vector2(size[0] - 50, 150);
     add(playerPaddle);
 
@@ -112,7 +116,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     ball.position = Vector2(size[0] / 2, size[1] / 2);
     add(ball);
 
-    scoreCounter.position = Vector2(size[0] / 2, 20);
+    scoreCounter.position = Vector2(size[0] / 2, 10);
     add(scoreCounter);
 
     overlays.add('DashboardOverlay');
@@ -160,6 +164,8 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     }
     if (ball.x < -25 || ball.x > size[0] + 25) {
       pauseEngine();
+      overlays.add('GameOverOverlay');
+      submit.retrieveData();
     }
 
     if (ball.y > size[1] - 25) {

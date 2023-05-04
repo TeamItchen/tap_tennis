@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flame/flame.dart';
 import 'package:flame/game.dart';
-import 'package:tap_tennis/dashboard/dashboard.dart';
-
+import 'package:tap_tennis/dashboard/overlay_pause.dart';
+import 'package:tap_tennis/dashboard/overlay_game_over.dart';
 import '/components/tap_tennis_game.dart';
 
 main() {
@@ -19,7 +18,10 @@ Widget createGameWidget() {
       overlayBuilderMap: {
         'DashboardOverlay': (BuildContext context, TapTennisGame game) {
           return Dashboard(game: game);
-        }
+        },
+				'GameOverOverlay': (BuildContext context, TapTennisGame game) {
+          return GameOver(game: game);
+        },
       },
     ),
   );
