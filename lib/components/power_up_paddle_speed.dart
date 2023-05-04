@@ -17,7 +17,7 @@ class PowerUpPaddleSpeed extends SpriteComponent
   @override
   Future<void> onLoad() async {
     await super.onLoad();
-    sprite = await gameRef.loadSprite("speedUp.png");
+    sprite = await gameRef.loadSprite("powerUpPaddleSpeed.png");
     size = Vector2(50, 50);
     add(CircleHitbox());
   }

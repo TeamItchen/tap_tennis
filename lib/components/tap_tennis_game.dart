@@ -29,6 +29,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     powerupspeed,
     poweruplength,
     bigBall,
+    speedpaddle,
   ];
 
   //Game variables
@@ -67,6 +68,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     _powerUpExists = false;
   }
 
+  // There 2 methods both perform a check to see if their respective powerups have been hit or not. then acts accordingly.
   void powerUpBigHitBall(bool hitBall) async {
     powerUpBigHit = hitBall;
     await Future.delayed(const Duration(seconds: 5));
@@ -112,9 +114,9 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   //Set Paddle Speed
-  Future<double> setPaddleSpeed(powerUpLengthHit) async {
+  Future<double> setPaddleSpeed(speedpad) async {
     double paddlespeed = await data.getPaddleSpeed();
-    if (powerUpLengthHit == true) {
+    if (speedpad == true) {
       paddlespeed *= 2;
     }
     return paddlespeed;
@@ -203,7 +205,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
       ballXDirection = "right";
     }
     if (ball.x >= size[0] - 75 && paddleHit == true) {
-      ballXDirection = "left"; //
+      ballXDirection = "left";
       updateScore();
     }
     if (ball.x < -25 || ball.x > size[0] + 25) {
