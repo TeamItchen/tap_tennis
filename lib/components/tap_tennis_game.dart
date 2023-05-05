@@ -213,6 +213,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     if (obstaclePaddleSizeHit == true) {
       playerPaddle.size.y = 50;
     }
+    // todo sam: make paddle grow from middle and not top? (adjust position)
     return playerPaddle.size;
   }
 
@@ -398,9 +399,11 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     //Player Paddle edge detection
     if (playerPaddle.y > size[1] - playerPaddle.size.y) {
       playerDirection = "stop";
+      playerPaddle.y = size[1] - playerPaddle.size.y;
     }
     if (playerPaddle.y < 0) {
       playerDirection = "stop";
+      playerPaddle.y = 0;
     }
 
     //Power-Up Sprite Removal On Hit
@@ -453,6 +456,11 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   //Stop player paddle movement when user releases finger from screen
   @override
   void onTapUp(TapUpInfo info) {
+    // todo sam: problem here..
+    // if tapped and then drag flame will call onTapCancel immediately and never call onTapUp
+    // because it thinks the user wants to drag and not tap
+    // we still need to be able to handle the release to stop the paddle
+
     playerDirection = "stop";
   }
 }
