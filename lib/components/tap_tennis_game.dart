@@ -43,6 +43,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   bool powerUpPortalHit = false;
   bool _cooldown = false;
   bool _powerUpExists = false;
+  bool teleported = false;
 
   //Method to show whether a paddle has hit the ball
   paddleHitBall(bool hitBall) {
@@ -82,8 +83,9 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     _powerUpExists = false;
   }
 
-  void powerUpPortalHitBall(bool hitBall) async {
+  void powerUpPortalHitBall(bool hitBall, portaltype) async {
     powerUpPortalHit = hitBall;
+    placePortal(hitBall, portaltype);
     await Future.delayed(const Duration(seconds: 1));
     powerUpPortalHit = !hitBall;
     _powerUpExists = false;
@@ -138,9 +140,14 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   void placePortal(hit, portaltype) {
-    if (hit == true && portaltype == true) {
-      ball.position = Vector2(powerupportal2.x, powerupportal2.y);
-    } else if (hit == true && portaltype == false) {}
+    if (teleported == false) {
+      if (hit == true && portaltype == true) {
+        ball.position = Vector2(powerupportal2.x, powerupportal2.y);
+      } else if (hit == true && portaltype == false) {
+        ball.position = Vector2(powerupportal.x, powerupportal.y);
+      }
+      teleported = true;
+    }
   }
 
   //Random Power Up Spawner
@@ -299,10 +306,11 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     if (powerUpPadspeedHit = true) {
       speedpaddle.removeFromParent();
     }
-    // if (powerUpPortalHit = true) {
-    //   powerupportal.removeFromParent();
-    //   powerupportal2.removeFromParent();
-    // }
+    if (powerUpPortalHit = true) {
+      powerupportal.removeFromParent();
+      powerupportal2.removeFromParent();
+      teleported = false;
+    }
   }
 
   //Player movement code
