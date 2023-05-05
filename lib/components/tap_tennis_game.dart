@@ -143,10 +143,11 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     if (teleported == false) {
       if (hit == true && portaltype == true) {
         ball.position = Vector2(powerupportal2.x, powerupportal2.y);
+        teleported = true;
       } else if (hit == true && portaltype == false) {
         ball.position = Vector2(powerupportal.x, powerupportal.y);
+        teleported = true;
       }
-      teleported = true;
     }
   }
 
@@ -160,10 +161,11 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
       powerUps[i].position = Vector2(powerUpX, powerUpY);
       add(powerUps[i]);
       if (powerUps[i] == powerupportal) {
-        double powerUpX =
+        double powerUpXaxis =
             (random.nextInt(sizeX.round() - 200) + 100).toDouble();
-        double powerUpY = (random.nextInt(sizeY.round() - 100) + 50).toDouble();
-        powerupportal2.position = Vector2(powerUpX, powerUpY);
+        double powerUpYaxis =
+            (random.nextInt(sizeY.round() - 100) + 50).toDouble();
+        powerupportal2.position = Vector2(powerUpXaxis, powerUpYaxis);
         powerupportal.portal =
             true; // true represents the 1st portal(false = 2nd) , used to differentiate between the 2 portals
         add(powerupportal2);
@@ -303,13 +305,14 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     if (powerUpBigHit == true) {
       bigBall.removeFromParent();
     }
-    if (powerUpPadspeedHit = true) {
+    if (powerUpPadspeedHit == true) {
       speedpaddle.removeFromParent();
     }
-    if (powerUpPortalHit = true) {
+    if (teleported == true) {
       powerupportal.removeFromParent();
       powerupportal2.removeFromParent();
       teleported = false;
+      _powerUpExists = false;
     }
   }
 
