@@ -72,6 +72,9 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   bool powerUpsActive = false;
   bool obstaclesActive = false;
 
+  static const double paddleWidth = 25;
+  static const double paddlePosOffset = 25;
+
   //Method to show whether a paddle has hit the ball
   paddleHitBall(bool hitBall) {
     paddleHit = hitBall;
@@ -175,7 +178,6 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
 
   //Set Ball Size
   Future<Vector2> setBallSize(powerUpBallSizeHit, obstacleBallSizeHit) async {
-    double ballSpeed = await data.getBallSpeed();
     ball.size = Vector2(25, 25);
     if (powerUpBallSizeHit == true) {
       ball.size.x += 25;
@@ -204,12 +206,12 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   //Set Paddle Size
   Future<Vector2> setPaddleLength(
       powerUpPaddleSizeHit, obstaclePaddleSizeHit) async {
-    playerPaddle.size = Vector2(25, 100);
+    playerPaddle.size = Vector2(paddleWidth, 100);
     if (powerUpPaddleSizeHit == true) {
-      playerPaddle.size = Vector2(25, 150);
+      playerPaddle.size.y = 150;
     }
     if (obstaclePaddleSizeHit == true) {
-      playerPaddle.size = Vector2(25, 50);
+      playerPaddle.size.y = 50;
     }
     return playerPaddle.size;
   }
@@ -261,10 +263,10 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
 
     score = 0;
 
-    playerPaddle.position = Vector2(size[0] - 50, 150);
+    playerPaddle.position = Vector2(size[0] - paddlePosOffset - paddleWidth, 150);
     add(playerPaddle);
 
-    computerPaddle.position = Vector2(50, 150);
+    computerPaddle.position = Vector2(paddlePosOffset, 150);
     add(computerPaddle);
 
     ball.position = Vector2(size[0] / 2, size[1] / 2);
@@ -326,20 +328,24 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     }
 
     //Ball movement code
-    if (ball.x <= (ball.size.x + 50) && paddleHit == true) {
-      ballXDirection = "right";
+    if (paddleHit) {
+      if (ball.x < size.x / 2) {
+        // hit in left half of the screen - comp
+        ballXDirection = "right";
+      } else {
+        // hit in right half of the screen - player
+        ballXDirection = "left";
+        updateScore();
+      }
     }
-    if (ball.x >= size[0] - (ball.size.x + 50) && paddleHit == true) {
-      ballXDirection = "left";
-      updateScore();
-    }
-    if (ball.x < -25 || ball.x > size[0] + 25) {
+
+    if (ball.x < -ball.size[0] || ball.x > size[0]) {
       pauseEngine();
       overlays.add('GameOverOverlay');
       submit.retrieveData();
     }
 
-    if (ball.y > size[1] - 25) {
+    if (ball.y > size[1] - ball.size[1]) {
       ballYDirection = "up";
     }
     if (ball.y < 0) {
@@ -430,8 +436,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
 
     if (tapCoordinates.y > size[1] / 2) {
       playerDirection = "down";
-    }
-    if (tapCoordinates.y <= size[1] / 2) {
+    } else {
       playerDirection = "up";
     }
   }
