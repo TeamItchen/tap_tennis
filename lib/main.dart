@@ -20,18 +20,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     //Lock orientation to landscape
-		SystemChrome.setPreferredOrientations([
+    SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
 
-		//Auto-hide system navbar
-    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
-        overlays: [SystemUiOverlay.top]);
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+        systemStatusBarContrastEnforced: true,
+        statusBarIconBrightness: Brightness.light,
+        systemNavigationBarIconBrightness: Brightness.light));
 
-		//Various parameters incl routes for navigation between widgets
+    //Auto-hide system navbar
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.immersiveSticky);
+
+    //Various parameters incl routes for navigation between widgets
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Pong',
@@ -45,7 +48,7 @@ class MyApp extends StatelessWidget {
       },
       theme: ThemeData(
         primarySwatch: colours.Palette.midnightGreen,
-				scaffoldBackgroundColor: colours.Palette.gunmetal,
+        scaffoldBackgroundColor: colours.Palette.gunmetal,
       ),
     );
   }

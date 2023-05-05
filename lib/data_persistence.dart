@@ -44,7 +44,7 @@ Future<bool> getPowerUpsStatus() async {
   final prefs = await SharedPreferences.getInstance();
   bool? powerUps = prefs.getBool('powerUps');
   if (powerUps == null) {
-    powerUps = false;
+    powerUps = true;
   }
   return powerUps;
 }
@@ -54,7 +54,7 @@ Future<bool> getObstaclesStatus() async {
   final prefs = await SharedPreferences.getInstance();
   bool? obstacles = prefs.getBool('obstacles');
   if (obstacles == null) {
-    obstacles = false;
+    obstacles = true;
   }
   return obstacles;
 }

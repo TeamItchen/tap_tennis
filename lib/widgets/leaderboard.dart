@@ -53,63 +53,79 @@ class _LeaderboardState extends State<Leaderboard> {
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        title:
-            const Text("Leaderboard", style: TextStyle(fontFamily: "ArcadeN")),
-      ),
-      body: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[
-          Row(
-            children: [
-              //Names
-              Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                Padding(padding: EdgeInsets.only(top: 20)),
-                const Text("Name",
-                    style: TextStyle(
-                      fontFamily: "ArcadeN",
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    )),
-                const Padding(padding: EdgeInsets.only(bottom: 15)),
-                for (var name in leaderboard)
-                  Text(name.key,
-                      style: const TextStyle(
-                        fontFamily: "ArcadeN",
-                        fontSize: 25,
-                        color: Colors.white,
-                      ))
-              ]),
-              const Padding(
-                padding: EdgeInsets.only(left: 50),
-              ),
+        appBar: AppBar(
+          title: const Text("Leaderboard",
+              style: TextStyle(fontFamily: "ArcadeN")),
+        ),
+        body: Container(
+            height: height,
+            child: SingleChildScrollView(
+                child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                const Padding(
+                  padding: EdgeInsets.only(right: 50),
+                ),
+                //Names
+                Expanded(
+                  flex: 5,
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Padding(padding: EdgeInsets.only(top: 20)),
+                        const Text("Name",
+                            style: TextStyle(
+                              fontFamily: "ArcadeN",
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.white,
+                            )),
+                        const Padding(padding: EdgeInsets.only(bottom: 15)),
+                        for (var name in leaderboard)
+                          Text(name.key,
+                              style: const TextStyle(
+                                fontFamily: "ArcadeN",
+                                fontSize: 25,
+                                color: Colors.white,
+                              ),
+                              overflow: TextOverflow.ellipsis)
+                      ]),
+                ),
+                const Padding(
+                  padding: EdgeInsets.only(left: 50),
+                ),
 
-              //Scores
-              Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
-                const Padding(padding: EdgeInsets.only(top: 20)),
-                const Text("Score",
-                    style: TextStyle(
-                      fontFamily: "ArcadeN",
-                      fontSize: 30,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.white,
-                    )),
-                const Padding(padding: EdgeInsets.only(bottom: 15)),
-                for (var name in leaderboard)
-                  Text(name.value.toString(),
-                      style: const TextStyle(
-                        fontFamily: "ArcadeN",
-                        fontSize: 25,
-                        color: Colors.white,
-                      ))
-              ]),
-            ],
-          )
-        ],
-      ),
-    );
+                //Scores
+                Expanded(
+                    flex: 5,
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Padding(padding: EdgeInsets.only(top: 20)),
+                          const Text("Score",
+                              style: TextStyle(
+                                fontFamily: "ArcadeN",
+                                fontSize: 30,
+                                fontWeight: FontWeight.bold,
+                                color: Colors.white,
+                              )),
+                          const Padding(padding: EdgeInsets.only(bottom: 15)),
+                          for (var name in leaderboard)
+                            Text(name.value.toString(),
+                                style: const TextStyle(
+                                  fontFamily: "ArcadeN",
+                                  fontSize: 25,
+                                  color: Colors.white,
+                                ))
+                        ])),
+                const Padding(
+                  padding: EdgeInsets.only(left: 50),
+                ),
+              ],
+            ))));
   }
 
   //When widget gets destroyed, stop listening for database changes
