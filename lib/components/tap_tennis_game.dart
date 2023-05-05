@@ -84,6 +84,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
 
   void powerUpPortalHitBall(bool hitBall) async {
     powerUpPortalHit = hitBall;
+    await Future.delayed(const Duration(seconds: 1));
     powerUpPortalHit = !hitBall;
     _powerUpExists = false;
   }
@@ -139,9 +140,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   void placePortal(hit, portaltype) {
     if (hit == true && portaltype == true) {
       ball.position = Vector2(powerupportal2.x, powerupportal2.y);
-    } else if (hit == true && portaltype == false) {
-      ball.position = Vector2(powerupportal.x, powerupportal.y);
-    }
+    } else if (hit == true && portaltype == false) {}
   }
 
   //Random Power Up Spawner
@@ -300,6 +299,10 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     if (powerUpPadspeedHit = true) {
       speedpaddle.removeFromParent();
     }
+    // if (powerUpPortalHit = true) {
+    //   powerupportal.removeFromParent();
+    //   powerupportal2.removeFromParent();
+    // }
   }
 
   //Player movement code
