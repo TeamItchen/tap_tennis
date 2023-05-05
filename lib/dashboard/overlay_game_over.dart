@@ -38,6 +38,7 @@ class _GameOverState extends State<GameOver> {
                     const Text(
                       "Game Over",
                       style: TextStyle(
+                        fontFamily: "ArcadeN",
                         fontSize: 40,
                         fontWeight: FontWeight.bold,
                         color: Colors.white,

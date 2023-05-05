@@ -14,15 +14,20 @@ class MainMenu extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
+            Padding(padding: EdgeInsets.only(top: height / 200)),
             const Text(
               "Tap Tennis",
-              style: TextStyle(fontSize: 40, fontWeight: FontWeight.bold),
+              style: TextStyle(
+                fontFamily: "ArcadeI",
+                fontSize: 40,
+                color: Colors.white,
+              ),
             ),
             Column(children: [
               //PLAY BUTTON
               Padding(
                   padding: EdgeInsets.only(
-                      top: height / 15,
+                      top: height / 100,
                       left: height / 100,
                       right: height / 100),
                   child: Container(

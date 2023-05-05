@@ -73,6 +73,14 @@ flutter:
     fonts:
       - asset: assets/fonts/adam_cg_pro.otf
 
+  - family: ArcadeI
+    fonts:
+      - asset: assets/fonts/arcade_I.ttf
+
+  - family: ArcadeN
+    fonts:
+      - asset: assets/fonts/arcade_n.ttf
+
 
   #fonts:
     #- family: FuturaBook    

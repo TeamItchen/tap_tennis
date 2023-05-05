@@ -55,15 +55,58 @@ class _LeaderboardState extends State<Leaderboard> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Leaderboard"),
+        title:
+            const Text("Leaderboard", style: TextStyle(fontFamily: "ArcadeN")),
       ),
       body: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: <Widget>[
-          Column(children: [
-            for (var name in leaderboard)
-              Text(name.key + " " + name.value.toString())
-          ])
+          Row(
+            children: [
+              //Names
+              Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                Padding(padding: EdgeInsets.only(top: 20)),
+                const Text("Name",
+                    style: TextStyle(
+                      fontFamily: "ArcadeN",
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    )),
+                const Padding(padding: EdgeInsets.only(bottom: 15)),
+                for (var name in leaderboard)
+                  Text(name.key,
+                      style: const TextStyle(
+                        fontFamily: "ArcadeN",
+                        fontSize: 25,
+                        color: Colors.white,
+                      ))
+              ]),
+              const Padding(
+                padding: EdgeInsets.only(left: 50),
+              ),
+
+              //Scores
+              Column(crossAxisAlignment: CrossAxisAlignment.end, children: [
+                const Padding(padding: EdgeInsets.only(top: 20)),
+                const Text("Score",
+                    style: TextStyle(
+                      fontFamily: "ArcadeN",
+                      fontSize: 30,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    )),
+                const Padding(padding: EdgeInsets.only(bottom: 15)),
+                for (var name in leaderboard)
+                  Text(name.value.toString(),
+                      style: const TextStyle(
+                        fontFamily: "ArcadeN",
+                        fontSize: 25,
+                        color: Colors.white,
+                      ))
+              ]),
+            ],
+          )
         ],
       ),
     );

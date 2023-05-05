@@ -17,6 +17,38 @@ class Palette {
     },
   );
 
+	  static const MaterialColor gunmetal = MaterialColor(
+				0xff162E3E,
+				<int, Color>{
+      50: Color(0xff1E1E60),
+      100: Color(0xff14325a),
+      200: Color(0xff14325a),
+      300: Color(0xff14325a),
+      400: Color(0xff14325a),
+      500: Color(0xff14325a),
+      600: Color(0xff14325a),
+      700: Color(0xff14325a),
+      800: Color(0xff14325a),
+      900: Color(0xff14325a),
+    },
+  );
+
+			  static const MaterialColor midnightGreen = MaterialColor(
+				0xff2A606F,
+				<int, Color>{
+      50: Color(0xff2a2d2e),
+      100: Color(0xff061425),
+      200: Color(0xff061425),
+      300: Color(0xff061425),
+      400: Color(0xff061425),
+      500: Color(0xff061425),
+      600: Color(0xff061425),
+      700: Color(0xff061425),
+      800: Color(0xff061425),
+      900: Color(0xff061425),
+    },
+  );
+
   static const MaterialColor cadetBlue = MaterialColor(
     0xff7CB4B8,
     <int, Color>{

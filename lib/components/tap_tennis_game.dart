@@ -1,6 +1,8 @@
 import 'dart:math';
+import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
+import 'package:flame/palette.dart';
 import 'package:tap_tennis/components/paddle.dart';
 import 'package:tap_tennis/components/ball.dart';
 import 'package:tap_tennis/components/score.dart';

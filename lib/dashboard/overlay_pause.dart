@@ -55,6 +55,7 @@ class _DashboardState extends State<Dashboard> {
                       const Text(
                         "Paused",
                         style: TextStyle(
+                          fontFamily: "ArcadeN",
                           fontSize: 40,
                           fontWeight: FontWeight.bold,
                           color: Colors.white,

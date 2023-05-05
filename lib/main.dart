@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:tap_tennis/colours.dart' as colours;
 import 'package:tap_tennis/widgets/main_menu.dart' as menu_page;
 import 'package:tap_tennis/widgets/play.dart' as play_page;
 import 'package:tap_tennis/widgets/options.dart' as options_page;
@@ -43,7 +44,8 @@ class MyApp extends StatelessWidget {
             const leaderboard_page.Leaderboard(title: ""),
       },
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: colours.Palette.midnightGreen,
+				scaffoldBackgroundColor: colours.Palette.gunmetal,
       ),
     );
   }

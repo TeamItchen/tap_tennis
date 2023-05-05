@@ -14,7 +14,7 @@ class _OptionsState extends State<Options> {
     double width = MediaQuery.of(context).size.width;
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Options"),
+          title: const Text("Options", style: TextStyle(fontFamily: "ArcadeN")),
         ),
         body: FutureBuilder(
             future: Future.wait([
@@ -39,12 +39,14 @@ class _OptionsState extends State<Options> {
                             width: width / 1.1,
                             child: TextField(
                               controller: snapshot.data![0],
+															style: const TextStyle(color: Colors.grey),
                               decoration: InputDecoration(
                                 border: const UnderlineInputBorder(),
                                 hintText: 'PLEASE ENTER A NICKNAME',
                                 hintStyle: const TextStyle(color: Colors.grey),
                                 suffixIcon: IconButton(
                                   icon: const Icon(Icons.send),
+																	color: Colors.grey,
                                   onPressed: () {
                                     data.setNickname(snapshot.data![0].text);
                                   },
@@ -64,8 +66,8 @@ class _OptionsState extends State<Options> {
                                     child: const Text(
                                       "Ball Speed",
                                       style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
+																					color: Colors.grey,
+                                          fontSize: 20),
                                     )),
                                 Padding(
                                     padding: EdgeInsets.only(
@@ -98,8 +100,8 @@ class _OptionsState extends State<Options> {
                                     child: const Text(
                                       "Paddle Speed",
                                       style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold),
+																					color: Colors.grey,
+                                          fontSize: 20,),
                                     )),
                                 Padding(
                                     padding: EdgeInsets.only(
@@ -135,8 +137,7 @@ class _OptionsState extends State<Options> {
                               Padding(
                                   padding: EdgeInsets.only(
                                       top: height / 500,
-                                      left: width / 15,
-                                      right: width / 90),
+                                      right: width / 10),
                                   child: Container(
                                       height: height / 5,
                                       width: width / 3.65,
@@ -166,8 +167,7 @@ class _OptionsState extends State<Options> {
                               Padding(
                                   padding: EdgeInsets.only(
                                       top: height / 500,
-                                      left: width / 90,
-                                      right: width / 15),
+                                      left: width / 10),
                                   child: Container(
                                       height: height / 5,
                                       width: width / 3.65,
