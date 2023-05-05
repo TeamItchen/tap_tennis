@@ -1,6 +1,7 @@
 import 'package:flame/components.dart';
 import 'package:tap_tennis/components/tap_tennis_game.dart' as game;
 
+//Class to display score value as a graphical element onscreen
 class Score extends TextComponent with HasGameRef<game.TapTennisGame> {
   late String score;
 

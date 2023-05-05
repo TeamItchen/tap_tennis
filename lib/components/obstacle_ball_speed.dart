@@ -3,8 +3,8 @@ import 'package:flame/components.dart';
 import 'package:tap_tennis/components/ball.dart';
 import 'package:tap_tennis/components/tap_tennis_game.dart';
 
-/*Class which creates a Obstacle Speed Sprite
-  Position coordinates are passed into it when a Obstacle Speed object is created*/
+//Class which creates an Obstacle Ball Speed Sprite
+//Position coordinates are passed into it when object is created
 class ObstacleBallSpeed extends SpriteComponent
     with HasGameRef<TapTennisGame>, CollisionCallbacks {
   ObstacleBallSpeed({
@@ -20,7 +20,7 @@ class ObstacleBallSpeed extends SpriteComponent
     add(CircleHitbox());
   }
 
-  //Collision Detection between Ball and ObstacleSpeed
+  //Collision Detection between Ball and Obstacle
   @override
   void onCollision(intersectionPoints, other) {
     super.onCollision(intersectionPoints, other);

@@ -1,9 +1,8 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:tap_tennis/colours.dart' as colours;
 import '../components/tap_tennis_game.dart';
-import 'package:tap_tennis/components/ball.dart';
 
+//Pause Pop-Up - Activates when user pauses the game
 class Dashboard extends StatefulWidget {
   final TapTennisGame game;
   Dashboard({Key? key, required this.game}) : super(key: key);

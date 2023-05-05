@@ -3,8 +3,8 @@ import 'package:flame/components.dart';
 import 'package:tap_tennis/components/tap_tennis_game.dart';
 
 
-/*Class which creates a Paddle Sprite
-  Position coordinates are passed into it when a Paddle object is created*/
+//Class which creates a Paddle Sprite
+//Position coordinates are passed into it when object is created
 class Paddle extends SpriteComponent
     with HasGameRef<TapTennisGame>, CollisionCallbacks {
   Paddle({

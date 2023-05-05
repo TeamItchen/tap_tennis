@@ -6,21 +6,31 @@ import 'package:tap_tennis/widgets/play.dart' as play_page;
 import 'package:tap_tennis/widgets/options.dart' as options_page;
 import 'package:tap_tennis/widgets/leaderboard.dart' as leaderboard_page;
 
+//Main Method - Runs the Flutter App
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   runApp(MyApp());
 }
 
+//Main widget- Defines the characteristics of all widgets in the app
 class MyApp extends StatelessWidget {
   final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
   MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([
+
+    //Lock orientation to landscape
+		SystemChrome.setPreferredOrientations([
       DeviceOrientation.landscapeLeft,
       DeviceOrientation.landscapeRight,
     ]);
+
+		//Auto-hide system navbar
+    SystemChrome.setEnabledSystemUIMode(SystemUiMode.manual,
+        overlays: [SystemUiOverlay.top]);
+
+		//Various parameters incl routes for navigation between widgets
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Pong',
@@ -28,8 +38,9 @@ class MyApp extends StatelessWidget {
       routes: {
         '/': (context) => menu_page.MainMenu(),
         '/play': (context) => play_page.createGameWidget(),
-				'/options': (context) => options_page.Options(),
-				'/leaderboard': (context) => const leaderboard_page.Leaderboard(title: ""), 
+        '/options': (context) => options_page.Options(),
+        '/leaderboard': (context) =>
+            const leaderboard_page.Leaderboard(title: ""),
       },
       theme: ThemeData(
         primarySwatch: Colors.blue,

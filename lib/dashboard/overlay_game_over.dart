@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tap_tennis/colours.dart' as colours;
 import '../components/tap_tennis_game.dart';
 
+//Game Over Pop-Up - Activates when user loses the game
 class GameOver extends StatefulWidget {
   final TapTennisGame game;
   GameOver({Key? key, required this.game}) : super(key: key);

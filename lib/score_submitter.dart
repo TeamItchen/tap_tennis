@@ -19,17 +19,20 @@ void retrieveData() async {
   final storedScoreRaw = await ref.child('Leaderboard/$nickName/Score').get();
   final storedScore = int.tryParse((storedScoreRaw.value).toString());
 
-  //Check if there is an entry for the user in the database
-  if (storedScoreRaw.exists) {
-    //If the score from the latest round is higher than the user's stored score, overwrite the database entry to contain the new high score
-    if (game.score > storedScore!) {
+	//Check if the user has set a nickname in settings
+  if (nickName != "") {
+    //Check if there is an entry for the user in the database
+    if (storedScoreRaw.exists) {
+      //If the score from the latest round is higher than the user's stored score, overwrite the database entry to contain the new high score
+      if (game.score > storedScore!) {
+        _submitData(nickName, game.score);
+      }
+    }
+
+    //If there is no entry for the user in the database, insert the name and score
+    else {
       _submitData(nickName, game.score);
     }
-  }
-
-  //If there is no entry for the user in the database, insert the name and score
-  else {
-    _submitData(nickName, game.score);
   }
 }
 

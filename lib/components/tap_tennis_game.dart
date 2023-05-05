@@ -75,8 +75,8 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     paddleHit = hitBall;
   }
 
-  //When powerUpSpeed is hit, the powerUpSpeedHit variable is set to true for 5 seconds
-  //Whilst this is true, setBallSpeed will alter the ball speed
+  //When powerUpBallSpeed is hit, the powerUpBallSpeedHit variable is set to true for 5 seconds. Whilst this is true, the powerup is applied.
+	//Afterwards, powerUpExists is set to false to alert the game to generate a new power-up sprite.
   void powerUpBallSpeedHitBall(bool hitBall) async {
     powerUpBallSpeedHit = hitBall;
     await Future.delayed(Duration(seconds: 5));
@@ -84,8 +84,8 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     _powerUpExists = false;
   }
 
-  //When powerUpSize is hit, the powerUpSizeHit variable is set to true for 5 seconds
-  //Whilst this is true, setBallSize will alter the ball speed
+  //When powerUpBallSize is hit, the powerUpBallSpeedHit variable is set to true for 5 seconds. Whilst this is true, the powerup is applied.
+	//Afterwards, powerUpExists is set to false to alert the game to generate a new power-up sprite.
   void powerUpBallSizeHitBall(bool hitBall) async {
     powerUpBallSizeHit = hitBall;
     await Future.delayed(Duration(seconds: 5));
@@ -93,8 +93,8 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     _powerUpExists = false;
   }
 
-  //When powerUpSpeed is hit, the powerUpSpeedHit variable is set to true for 5 seconds
-  //Whilst this is true, setBallSpeed will alter the ball speed
+  //When powerUpPaddleSpeed is hit, the powerUpBallSpeedHit variable is set to true for 5 seconds. Whilst this is true, the powerup is applied.
+	//Afterwards, powerUpExists is set to false to alert the game to generate a new power-up sprite.
   void powerUpPaddleSpeedHitBall(bool hitBall) async {
     powerUpPaddleSpeedHit = hitBall;
     await Future.delayed(Duration(seconds: 5));
@@ -102,8 +102,8 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     _powerUpExists = false;
   }
 
-  //When poweruplength is hit, the powerUpLengthHit variable is set to true for 5 seconds
-  ////Whilst this is true, setPaddleLength will alter the paddle length
+  //When powerUpPaddleSize is hit, the powerUpBallSpeedHit variable is set to true for 5 seconds. Whilst this is true, the powerup is applied.
+	//Afterwards, powerUpExists is set to false to alert the game to generate a new power-up sprite.
   void powerUpPaddleSizeHitBall(bool hitBall) async {
     powerUpPaddleSizeHit = hitBall;
     await Future.delayed(const Duration(seconds: 5));
@@ -111,8 +111,8 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     _powerUpExists = false;
   }
 
-  //When obstacleSpeed is hit, the obstacleSpeedHit variable is set to true for 5 seconds
-  //Whilst this is true, setBallSpeed will alter the ball speed
+  //When obstacleBallSpeed is hit, the powerUpBallSpeedHit variable is set to true for 5 seconds. Whilst this is true, the powerup is applied.
+	//Afterwards, obstacleExists is set to false to alert the game to generate a new obstacle sprite.
   void obstacleBallSpeedHitBall(bool hitBall) async {
     obstacleBallSpeedHit = hitBall;
     await Future.delayed(Duration(seconds: 5));
@@ -120,8 +120,8 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     _obstacleExists = false;
   }
 
-  //When obstacleSize is hit, the obstacleSizeHit variable is set to true for 5 seconds
-  //Whilst this is true, setBallSize will alter the ball speed
+  //When obstacleBallSize is hit, the powerUpBallSpeedHit variable is set to true for 5 seconds. Whilst this is true, the powerup is applied.
+	//Afterwards, obstacleExists is set to false to alert the game to generate a new obstacle sprite.
   void obstacleBallSizeHitBall(bool hitBall) async {
     obstacleBallSizeHit = hitBall;
     await Future.delayed(Duration(seconds: 5));
@@ -129,8 +129,8 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     _obstacleExists = false;
   }
 
-  //When obstacleSpeed is hit, the obstacleSpeedHit variable is set to true for 5 seconds
-  //Whilst this is true, setBallSpeed will alter the ball speed
+  //When obstaclePaddleSpeed is hit, the powerUpBallSpeedHit variable is set to true for 5 seconds. Whilst this is true, the powerup is applied.
+	//Afterwards, obstacleExists is set to false to alert the game to generate a new obstacle sprite.
   void obstaclePaddleSpeedHitBall(bool hitBall) async {
     obstaclePaddleSpeedHit = hitBall;
     await Future.delayed(Duration(seconds: 5));
@@ -138,8 +138,8 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     _obstacleExists = false;
   }
 
-  //When obstaclelength is hit, the obstacleLengthHit variable is set to true for 5 seconds
-  ////Whilst this is true, setPaddleLength will alter the paddle length
+  //When obstaclePaddleSize is hit, the powerUpBallSpeedHit variable is set to true for 5 seconds. Whilst this is true, the powerup is applied.
+	//Afterwards, obstacleExists is set to false to alert the game to generate a new obstacle sprite.
   void obstaclePaddleSizeHitBall(bool hitBall) async {
     obstaclePaddleSizeHit = hitBall;
     await Future.delayed(const Duration(seconds: 5));
@@ -279,9 +279,11 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   update(double dt) async {
     super.update(dt);
 
+		//Get user preference on power-ups and obstacles
     bool powerUpsActive = await data.getPowerUpsStatus();
     bool obstaclesActive = await data.getObstaclesStatus();
 
+		//Set ball and paddle speed and size
     double ballSpeed =
         await setBallSpeed(powerUpBallSpeedHit, obstacleBallSpeedHit);
     double paddleSpeed =
@@ -342,8 +344,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
       ballYDirection = "down";
     }
 
-    /*Returns paddleHit back to false after the ball has hit the paddle so that
-		the game can detect when the ball has passed a paddle after the first move.*/
+    //Returns paddleHit back to false after the ball has hit the paddle so that the game can detect when the ball has passed a paddle after the first move.
     paddleHit = false;
 
     //Movement options for computer paddle
@@ -377,7 +378,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
         break;
     }
 
-    //Player edge detection
+    //Player Paddle edge detection
     if (playerPaddle.y > size[1] - playerPaddle.size.y) {
       playerDirection = "stop";
     }
@@ -433,7 +434,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     }
   }
 
-  //Player stop code
+  //Stop player paddle movement when user releases finger from screen
   @override
   void onTapUp(TapUpInfo info) {
     playerDirection = "stop";
