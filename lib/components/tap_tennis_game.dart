@@ -78,7 +78,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   //When powerUpBallSpeed is hit, the powerUpBallSpeedHit variable is set to true for 5 seconds. Whilst this is true, the powerup is applied.
-	//Afterwards, powerUpExists is set to false to alert the game to generate a new power-up sprite.
+  //Afterwards, powerUpExists is set to false to alert the game to generate a new power-up sprite.
   void powerUpBallSpeedHitBall(bool hitBall) async {
     powerUpBallSpeedHit = hitBall;
     await Future.delayed(Duration(seconds: 5));
@@ -87,7 +87,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   //When powerUpBallSize is hit, the powerUpBallSpeedHit variable is set to true for 5 seconds. Whilst this is true, the powerup is applied.
-	//Afterwards, powerUpExists is set to false to alert the game to generate a new power-up sprite.
+  //Afterwards, powerUpExists is set to false to alert the game to generate a new power-up sprite.
   void powerUpBallSizeHitBall(bool hitBall) async {
     powerUpBallSizeHit = hitBall;
     await Future.delayed(Duration(seconds: 5));
@@ -96,7 +96,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   //When powerUpPaddleSpeed is hit, the powerUpBallSpeedHit variable is set to true for 5 seconds. Whilst this is true, the powerup is applied.
-	//Afterwards, powerUpExists is set to false to alert the game to generate a new power-up sprite.
+  //Afterwards, powerUpExists is set to false to alert the game to generate a new power-up sprite.
   void powerUpPaddleSpeedHitBall(bool hitBall) async {
     powerUpPaddleSpeedHit = hitBall;
     await Future.delayed(Duration(seconds: 5));
@@ -105,7 +105,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   //When powerUpPaddleSize is hit, the powerUpBallSpeedHit variable is set to true for 5 seconds. Whilst this is true, the powerup is applied.
-	//Afterwards, powerUpExists is set to false to alert the game to generate a new power-up sprite.
+  //Afterwards, powerUpExists is set to false to alert the game to generate a new power-up sprite.
   void powerUpPaddleSizeHitBall(bool hitBall) async {
     powerUpPaddleSizeHit = hitBall;
     await Future.delayed(const Duration(seconds: 5));
@@ -114,7 +114,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   //When obstacleBallSpeed is hit, the powerUpBallSpeedHit variable is set to true for 5 seconds. Whilst this is true, the powerup is applied.
-	//Afterwards, obstacleExists is set to false to alert the game to generate a new obstacle sprite.
+  //Afterwards, obstacleExists is set to false to alert the game to generate a new obstacle sprite.
   void obstacleBallSpeedHitBall(bool hitBall) async {
     obstacleBallSpeedHit = hitBall;
     await Future.delayed(Duration(seconds: 5));
@@ -123,7 +123,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   //When obstacleBallSize is hit, the powerUpBallSpeedHit variable is set to true for 5 seconds. Whilst this is true, the powerup is applied.
-	//Afterwards, obstacleExists is set to false to alert the game to generate a new obstacle sprite.
+  //Afterwards, obstacleExists is set to false to alert the game to generate a new obstacle sprite.
   void obstacleBallSizeHitBall(bool hitBall) async {
     obstacleBallSizeHit = hitBall;
     await Future.delayed(Duration(seconds: 5));
@@ -132,7 +132,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   //When obstaclePaddleSpeed is hit, the powerUpBallSpeedHit variable is set to true for 5 seconds. Whilst this is true, the powerup is applied.
-	//Afterwards, obstacleExists is set to false to alert the game to generate a new obstacle sprite.
+  //Afterwards, obstacleExists is set to false to alert the game to generate a new obstacle sprite.
   void obstaclePaddleSpeedHitBall(bool hitBall) async {
     obstaclePaddleSpeedHit = hitBall;
     await Future.delayed(Duration(seconds: 5));
@@ -141,7 +141,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   //When obstaclePaddleSize is hit, the powerUpBallSpeedHit variable is set to true for 5 seconds. Whilst this is true, the powerup is applied.
-	//Afterwards, obstacleExists is set to false to alert the game to generate a new obstacle sprite.
+  //Afterwards, obstacleExists is set to false to alert the game to generate a new obstacle sprite.
   void obstaclePaddleSizeHitBall(bool hitBall) async {
     obstaclePaddleSizeHit = hitBall;
     await Future.delayed(const Duration(seconds: 5));
@@ -281,11 +281,11 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   update(double dt) async {
     super.update(dt);
 
-		//Get user preference on power-ups and obstacles
+    //Get user preference on power-ups and obstacles
     bool powerUpsActive = await data.getPowerUpsStatus();
     bool obstaclesActive = await data.getObstaclesStatus();
 
-		//Set ball and paddle speed and size
+    //Set ball and paddle speed and size
     double ballSpeed =
         await setBallSpeed(powerUpBallSpeedHit, obstacleBallSpeedHit);
     double paddleSpeed =
@@ -352,20 +352,29 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     //Movement options for computer paddle
     switch (compDirection) {
       case "down":
-        computerPaddle.y += 25;
+        computerPaddle.y += ballSpeed;
         break;
       case "up":
-        computerPaddle.y -= 25;
+        computerPaddle.y -= ballSpeed;
         break;
+      case "stop":
+        computerPaddle.y += 0;
     }
 
-    //TEMPORARY computer movement code
-    if (computerPaddle.y > size[1] - 100) {
-      compDirection = "up";
-    }
-    if (computerPaddle.y < 0) {
-      compDirection = "down";
-    }
+		//Computer Paddle Movement
+		if (ballXDirection == "left") {
+			// Ball is moving towards the computer paddle
+			if (ball.y < computerPaddle.y + computerPaddle.height / 2) {
+				compDirection = "up";
+			} else if (ball.y > computerPaddle.y + computerPaddle.height / 2) {
+				compDirection = "down";
+			} else {
+				compDirection = "stop";
+			}
+		} else {
+			// Ball is moving away from the computer paddle
+			compDirection = "stop";
+		}
 
     //Movement options for player paddle
     switch (playerDirection) {
