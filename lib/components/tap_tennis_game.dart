@@ -10,6 +10,7 @@ import 'package:tap_tennis/components/power_up_length.dart';
 import 'package:tap_tennis/components/power_up_ball_size.dart';
 import 'package:tap_tennis/score_submitter.dart' as submit;
 import 'package:tap_tennis/components/power_up_paddle_speed.dart';
+import 'package:tap_tennis/components/portal.dart';
 
 int score = 0;
 
@@ -24,8 +25,10 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   PowerUpLength poweruplength = PowerUpLength();
   PowerUpBallSize bigBall = PowerUpBallSize();
   PowerUpPaddleSpeed speedpaddle = PowerUpPaddleSpeed();
+  PowerUpPortal powerupportal = PowerUpPortal();
+  PowerUpPortal powerupportal2 = PowerUpPortal();
 
-  late List powerUps = [powerupspeed, poweruplength, bigBall, speedpaddle];
+  late List powerUps = [powerupspeed, poweruplength, bigBall, powerupportal];
 
   //Game variables
   String compDirection = "down";
@@ -37,6 +40,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   bool powerUpLengthHit = false;
   bool powerUpBigHit = false;
   bool powerUpPadspeedHit = false;
+  bool powerUpPortalHit = false;
   bool _cooldown = false;
   bool _powerUpExists = false;
 
@@ -75,6 +79,12 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     powerUpPadspeedHit = hitBall;
     await Future.delayed(const Duration(seconds: 5));
     powerUpPadspeedHit = !hitBall;
+    _powerUpExists = false;
+  }
+
+  void powerUpPortalHitBall(bool hitBall) async {
+    powerUpPortalHit = hitBall;
+    powerUpPortalHit = !hitBall;
     _powerUpExists = false;
   }
 
@@ -126,6 +136,14 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     return ball.size;
   }
 
+  void placePortal(hit, portaltype) {
+    if (hit == true && portaltype == true) {
+      ball.position = Vector2(powerupportal2.x, powerupportal2.y);
+    } else if (hit == true && portaltype == false) {
+      ball.position = Vector2(powerupportal.x, powerupportal.y);
+    }
+  }
+
   //Random Power Up Spawner
   Future<bool> powerUpSpawner(powerUpExists, sizeX, sizeY) async {
     if (powerUpExists == false) {
@@ -135,6 +153,15 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
       var i = random.nextInt(powerUps.length);
       powerUps[i].position = Vector2(powerUpX, powerUpY);
       add(powerUps[i]);
+      if (powerUps[i] == powerupportal) {
+        double powerUpX =
+            (random.nextInt(sizeX.round() - 200) + 100).toDouble();
+        double powerUpY = (random.nextInt(sizeY.round() - 100) + 50).toDouble();
+        powerupportal2.position = Vector2(powerUpX, powerUpY);
+        powerupportal.portal =
+            true; // true represents the 1st portal(false = 2nd) , used to differentiate between the 2 portals
+        add(powerupportal2);
+      }
       powerUpExists = true;
     }
     return powerUpExists;
