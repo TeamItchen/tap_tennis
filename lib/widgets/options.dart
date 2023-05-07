@@ -79,8 +79,8 @@ class _OptionsState extends State<Options> {
                                       child: Slider(
                                         value: snapshot.data![1],
                                         min: 1,
-                                        max: 10,
-                                        divisions: 9,
+                                        max: 15,
+                                        divisions: 14,
                                         label: snapshot.data![1]
                                             .round()
                                             .toString(),
@@ -113,8 +113,8 @@ class _OptionsState extends State<Options> {
                                       child: Slider(
                                         value: snapshot.data![2],
                                         min: 1,
-                                        max: 10,
-                                        divisions: 9,
+                                        max: 15,
+                                        divisions: 14,
                                         label: snapshot.data![2]
                                             .round()
                                             .toString(),

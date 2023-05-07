@@ -24,7 +24,7 @@ Future<double> getBallSpeed() async {
   final prefs = await SharedPreferences.getInstance();
   double? ballSpeed = prefs.getDouble('ballSpeed');
   if (ballSpeed == null) {
-    ballSpeed = 3;
+    ballSpeed = 5;
   }
   return ballSpeed;
 }
@@ -34,7 +34,7 @@ Future<double> getPaddleSpeed() async {
   final prefs = await SharedPreferences.getInstance();
   double? paddleSpeed = prefs.getDouble('paddleSpeed');
   if (paddleSpeed == null) {
-    paddleSpeed = 5;
+    paddleSpeed = 8;
   }
   return paddleSpeed;
 }
