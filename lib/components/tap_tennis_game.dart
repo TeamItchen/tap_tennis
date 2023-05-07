@@ -16,7 +16,6 @@ import 'package:tap_tennis/components/obstacle_ball_size.dart';
 import 'package:tap_tennis/components/obstacle_paddle_speed.dart';
 import 'package:tap_tennis/components/obstacle_paddle_size.dart';
 import 'package:tap_tennis/score_submitter.dart' as submit;
-import 'package:audioplayers/audioplayers.dart';
 
 int score = 0;
 
@@ -85,7 +84,6 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   //Afterwards, powerUpExists is set to false to alert the game to generate a new power-up sprite.
   void powerUpBallSpeedHitBall(bool hitBall) async {
     powerUpBallSpeedHit = hitBall;
-    playPop();
     await Future.delayed(Duration(seconds: 5));
     powerUpBallSpeedHit = !hitBall;
     _powerUpExists = false;
@@ -95,7 +93,6 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   //Afterwards, powerUpExists is set to false to alert the game to generate a new power-up sprite.
   void powerUpBallSizeHitBall(bool hitBall) async {
     powerUpBallSizeHit = hitBall;
-    playPop();
     await Future.delayed(Duration(seconds: 5));
     powerUpBallSizeHit = !hitBall;
     _powerUpExists = false;
@@ -105,7 +102,6 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   //Afterwards, powerUpExists is set to false to alert the game to generate a new power-up sprite.
   void powerUpPaddleSpeedHitBall(bool hitBall) async {
     powerUpPaddleSpeedHit = hitBall;
-    playPop();
     await Future.delayed(Duration(seconds: 5));
     powerUpPaddleSpeedHit = !hitBall;
     _powerUpExists = false;
@@ -115,7 +111,6 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   //Afterwards, powerUpExists is set to false to alert the game to generate a new power-up sprite.
   void powerUpPaddleSizeHitBall(bool hitBall) async {
     powerUpPaddleSizeHit = hitBall;
-    playPop();
     await Future.delayed(const Duration(seconds: 5));
     powerUpPaddleSizeHit = !hitBall;
     _powerUpExists = false;
@@ -125,7 +120,6 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   //Afterwards, obstacleExists is set to false to alert the game to generate a new obstacle sprite.
   void obstacleBallSpeedHitBall(bool hitBall) async {
     obstacleBallSpeedHit = hitBall;
-    playBeep();
     await Future.delayed(Duration(seconds: 5));
     obstacleBallSpeedHit = !hitBall;
     _obstacleExists = false;
@@ -135,7 +129,6 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   //Afterwards, obstacleExists is set to false to alert the game to generate a new obstacle sprite.
   void obstacleBallSizeHitBall(bool hitBall) async {
     obstacleBallSizeHit = hitBall;
-    playBeep();
     await Future.delayed(Duration(seconds: 5));
     obstacleBallSizeHit = !hitBall;
     _obstacleExists = false;
@@ -145,7 +138,6 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   //Afterwards, obstacleExists is set to false to alert the game to generate a new obstacle sprite.
   void obstaclePaddleSpeedHitBall(bool hitBall) async {
     obstaclePaddleSpeedHit = hitBall;
-    playBeep();
     await Future.delayed(Duration(seconds: 5));
     obstaclePaddleSpeedHit = !hitBall;
     _obstacleExists = false;
@@ -155,22 +147,9 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   //Afterwards, obstacleExists is set to false to alert the game to generate a new obstacle sprite.
   void obstaclePaddleSizeHitBall(bool hitBall) async {
     obstaclePaddleSizeHit = hitBall;
-    playBeep();
     await Future.delayed(const Duration(seconds: 5));
     obstaclePaddleSizeHit = !hitBall;
     _obstacleExists = false;
-  }
-
-  //Sound effects
-  final player = AudioPlayer();
-  void playTap() async {
-    player.play(AssetSource('../../assets/audios/Tap.mp3'));
-  }
-  void playPop() async {
-    player.play(AssetSource('../../assets/audios/Pop.mp3'));
-  }
-  void playBeep() async {
-    player.play(AssetSource('../../assets/audios/Beep.mp3'));
   }
 
   //Method that updates the player's score
@@ -359,9 +338,6 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
         ballXDirection = "left";
         updateScore();
       }
-      // Tap sound effect on-collision
-      // To-Do: Find a way around being called multiple times per hit
-      playTap();
     }
 
     if (ball.x < -ball.size[0] || ball.x > size[0]) {
