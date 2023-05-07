@@ -360,7 +360,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
         updateScore();
       }
       // Tap sound effect on-collision
-      // To-Do: Test if it is called multiple times per hit, add _cooldown if so
+      // To-Do: Find a way around being called multiple times per hit
       playTap();
     }
 
