@@ -1,8 +1,6 @@
 import 'dart:math';
-import 'package:flame/components.dart';
 import 'package:flame/events.dart';
 import 'package:flame/game.dart';
-import 'package:flame/palette.dart';
 import 'package:tap_tennis/components/paddle.dart';
 import 'package:tap_tennis/components/ball.dart';
 import 'package:tap_tennis/components/score.dart';
@@ -17,6 +15,7 @@ import 'package:tap_tennis/components/obstacle_paddle_speed.dart';
 import 'package:tap_tennis/components/obstacle_paddle_size.dart';
 import 'package:tap_tennis/score_submitter.dart' as submit;
 
+//Set score to zero before game begins
 int score = 0;
 
 class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
@@ -26,6 +25,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   Ball ball = Ball();
   Score scoreCounter = Score();
 
+  //Power-Up Sprites
   PowerUpBallSpeed powerupballspeed = PowerUpBallSpeed();
   PowerUpBallSize powerupballsize = PowerUpBallSize();
   PowerUpPaddleSpeed poweruppaddlespeed = PowerUpPaddleSpeed();
@@ -37,6 +37,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     poweruppaddlesize
   ];
 
+  //Obstacle Sprites
   ObstacleBallSpeed obstacleballspeed = ObstacleBallSpeed();
   ObstacleBallSize obstacleballsize = ObstacleBallSize();
   ObstaclePaddleSpeed obstaclepaddlespeed = ObstaclePaddleSpeed();
@@ -165,6 +166,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   //Set Ball Speed
+  //If relevant Power-Up / Obstacle is active, alter Ball Speed
   Future<double> setBallSpeed(powerUpBallSpeedHit, obstacleBallSpeedHit) async {
     double ballSpeed = await data.getBallSpeed();
     if (powerUpBallSpeedHit == true) {
@@ -177,6 +179,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   //Set Ball Size
+  //If relevant Power-Up / Obstacle is active, alter Ball Size
   Future<Vector2> setBallSize(powerUpBallSizeHit, obstacleBallSizeHit) async {
     ball.size = Vector2(25, 25);
     if (powerUpBallSizeHit == true) {
@@ -191,6 +194,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   //Set Paddle Speed
+  //If relevant Power-Up / Obstacle is active, alter Paddle Speed
   Future<double> setPaddleSpeed(
       powerUpPaddleSpeedHit, obstaclePaddleSpeedHit) async {
     double paddleSpeed = await data.getPaddleSpeed();
@@ -204,6 +208,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   //Set Paddle Size
+  //If relevant Power-Up / Obstacle is active, alter Paddle Size
   Future<Vector2> setPaddleLength(
       powerUpPaddleSizeHit, obstaclePaddleSizeHit) async {
     playerPaddle.size = Vector2(paddleWidth, 100);
@@ -213,7 +218,6 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     if (obstaclePaddleSizeHit == true) {
       playerPaddle.size.y = 50;
     }
-    // todo sam: make paddle grow from middle and not top? (adjust position)
     return playerPaddle.size;
   }
 
@@ -230,6 +234,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   //Random Power Up Spawner
+  //Generates random x, y pair and spawns a randomly selected Power-Up at that location
   Future<bool> powerUpSpawner(powerUpExists, sizeX, sizeY) async {
     if (powerUpExists == false) {
       Random random = new Random();
@@ -244,6 +249,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   }
 
   //Random Obstacle Spawner
+  //Generates random x, y pair and spawns a randomly selected Obstacle at that location
   Future<bool> obstacleSpawner(obstacleExists, sizeX, sizeY) async {
     if (obstacleExists == false) {
       Random random = new Random();
@@ -264,7 +270,8 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
 
     score = 0;
 
-    playerPaddle.position = Vector2(size[0] - paddlePosOffset - paddleWidth, 150);
+    playerPaddle.position =
+        Vector2(size[0] - paddlePosOffset - paddleWidth, 150);
     add(playerPaddle);
 
     computerPaddle.position = Vector2(paddlePosOffset, 150);
@@ -276,7 +283,7 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     scoreCounter.position = Vector2(size[0] / 2, 10);
     add(scoreCounter);
 
-    overlays.add('DashboardOverlay');
+    overlays.add('DashboardOverlay'); //Pause Button overlay
   }
 
   //Main game controls
@@ -331,26 +338,31 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
     //Ball movement code
     if (paddleHit) {
       if (ball.x < size.x / 2) {
-        // hit in left half of the screen - comp
+        //When computer paddle hits ball, deflect
         ballXDirection = "right";
       } else {
-        // hit in right half of the screen - player
+        //When player paddle hits ball, deflect
         ballXDirection = "left";
         updateScore();
       }
     }
 
-    if (ball.x < -ball.size[0] || ball.x > size[0]) {
-      pauseEngine();
-      overlays.add('GameOverOverlay');
-      submit.retrieveData();
-    }
-
+    //When ball hits either top of bottom of the screen, deflect
     if (ball.y > size[1] - ball.size[1]) {
       ballYDirection = "up";
     }
     if (ball.y < 0) {
       ballYDirection = "down";
+    }
+
+    //If either paddles fail to hit the ball:
+    //Pause the game engine
+    //Display 'Game Over' Screen
+    //Retrieve player's high score, if new score is higher than this, overwrite database entry
+    if (ball.x < -ball.size[0] || ball.x > size[0]) {
+      pauseEngine();
+      overlays.add('GameOverOverlay');
+      submit.retrieveData();
     }
 
     //Returns paddleHit back to false after the ball has hit the paddle so that the game can detect when the ball has passed a paddle after the first move.
@@ -368,20 +380,20 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
         computerPaddle.y += 0;
     }
 
-		//Computer Paddle Movement
-		if (ballXDirection == "left") {
-			// Ball is moving towards the computer paddle
-			if (ball.y < computerPaddle.y + computerPaddle.height / 2) {
-				compDirection = "up";
-			} else if (ball.y > computerPaddle.y + computerPaddle.height / 2) {
-				compDirection = "down";
-			} else {
-				compDirection = "stop";
-			}
-		} else {
-			// Ball is moving away from the computer paddle
-			compDirection = "stop";
-		}
+    //Computer Paddle Movement
+    if (ballXDirection == "left") {
+      //Ball is moving towards the computer paddle
+      if (ball.y < computerPaddle.y + computerPaddle.height / 2) {
+        compDirection = "up";
+      } else if (ball.y > computerPaddle.y + computerPaddle.height / 2) {
+        compDirection = "down";
+      } else {
+        compDirection = "stop";
+      }
+    } else {
+      //Ball is moving away from the computer paddle
+      compDirection = "stop";
+    }
 
     //Movement options for player paddle
     switch (playerDirection) {
@@ -456,11 +468,6 @@ class TapTennisGame extends FlameGame with HasCollisionDetection, TapDetector {
   //Stop player paddle movement when user releases finger from screen
   @override
   void onTapUp(TapUpInfo info) {
-    // todo sam: problem here..
-    // if tapped and then drag flame will call onTapCancel immediately and never call onTapUp
-    // because it thinks the user wants to drag and not tap
-    // we still need to be able to handle the release to stop the paddle
-
     playerDirection = "stop";
   }
 }

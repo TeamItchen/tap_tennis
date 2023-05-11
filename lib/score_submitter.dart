@@ -4,6 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:tap_tennis/data_persistence.dart' as data;
 import '../components/tap_tennis_game.dart' as game;
 
+//Initialize Firebase Service
 final Future<FirebaseApp> _fbApp = Firebase.initializeApp();
 
 //Reference to the Firebase Database

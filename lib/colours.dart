@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+//Variables for quick access of custom colours.
+
+//Flutter does not allow hex values to be passed directly as parameters to set
+//colours for gui elements, so Material colours are created here.
+
 class Palette {
   static const MaterialColor darkSlateGreen = MaterialColor(
     0xff35544F,

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 //GETTERS
+
 //Get Nickname value from disk
 Future<String> getNickname() async {
   final prefs = await SharedPreferences.getInstance();
@@ -20,6 +21,7 @@ Future<TextEditingController> getNicknameInitial() async {
 }
 
 //Get Ball Speed value from disk
+//If no value stored (eg: app opened for first time) set to 5
 Future<double> getBallSpeed() async {
   final prefs = await SharedPreferences.getInstance();
   double? ballSpeed = prefs.getDouble('ballSpeed');
@@ -30,6 +32,7 @@ Future<double> getBallSpeed() async {
 }
 
 //Get Paddle Speed value from disk
+//If no value stored (eg: app opened for first time) set to 8
 Future<double> getPaddleSpeed() async {
   final prefs = await SharedPreferences.getInstance();
   double? paddleSpeed = prefs.getDouble('paddleSpeed');
@@ -40,6 +43,7 @@ Future<double> getPaddleSpeed() async {
 }
 
 //Get PowerUp Status value from disk
+//If no value stored (eg: app opened for first time) set to true
 Future<bool> getPowerUpsStatus() async {
   final prefs = await SharedPreferences.getInstance();
   bool? powerUps = prefs.getBool('powerUps');
@@ -50,6 +54,7 @@ Future<bool> getPowerUpsStatus() async {
 }
 
 //Get Obstacles Status value from disk
+//If no value stored (eg: app opened for first time) set to true
 Future<bool> getObstaclesStatus() async {
   final prefs = await SharedPreferences.getInstance();
   bool? obstacles = prefs.getBool('obstacles');
@@ -60,33 +65,37 @@ Future<bool> getObstaclesStatus() async {
 }
 
 ////////////////////////////////////////////////////////////////////////////////
+
 //SETTERS
+//These functions are called by the options menu when settings are changed.
+//They take the value passed to them and stored it to the persistent storage.
+
 //Set new Nickname value to disk
 void setNickname(nickname) async {
-	final prefs = await SharedPreferences.getInstance();
-	prefs.setString('nickname', nickname);
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setString('nickname', nickname);
 }
 
 //Set new Ball Speed value to disk
 void setBallSpeed(ballSpeed) async {
-	final prefs = await SharedPreferences.getInstance();
-	prefs.setDouble('ballSpeed', ballSpeed);
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setDouble('ballSpeed', ballSpeed);
 }
 
 //Set new Paddle Speed value to disk
 void setPaddleSpeed(paddleSpeed) async {
-	final prefs = await SharedPreferences.getInstance();
-	prefs.setDouble('paddleSpeed', paddleSpeed);
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setDouble('paddleSpeed', paddleSpeed);
 }
 
 //Set new Power Ups value to disk
 void setPowerUps(powerUps) async {
-	final prefs = await SharedPreferences.getInstance();
-	prefs.setBool('powerUps', powerUps);
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setBool('powerUps', powerUps);
 }
 
 //Set new Obstacles value to disk
 void setObstacles(obstacles) async {
-	final prefs = await SharedPreferences.getInstance();
-	prefs.setBool('obstacles', obstacles);
+  final prefs = await SharedPreferences.getInstance();
+  prefs.setBool('obstacles', obstacles);
 }
