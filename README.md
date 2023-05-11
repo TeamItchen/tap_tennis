@@ -1,26 +1,15 @@
-# tap_tennis
+# Tap Tennis
+M30819 - Software Engineering Theory & Practice (2022/23)
+Team 15
 
-M30819
-Group 15 - 2022/2023
 
 ## About
-A game based on the classic arcade game 'Pong.'
-The project is done using a relatively new technology called 'flutter'.
-
-## Road Map
-
-### V0
-
-- [x] Build Flutter project
-- [x] Export the project onto GitHub
-- [x] Check if Runnable on Mobile devices 
-
-### V1
-
-- [ ] Main Page draft completed
-- [ ] simple background and sprites 
+A reimagined version of the classic arcade game 'Pong' built for Android and iOS using Dart's Flutter framework, 'Tap Tennis' is a fast-paced, competitive, retro-style table tennis game. Players must battle against obstacles and recieve power-ups to achieve the highest score possible! Players can track their achievements and compare their score to others through the leaderbaord.
 
 
-- [Our Specification & Design Document can be found here](https://portdotacdotuk-my.sharepoint.com/:b:/g/personal/up2052662_port_ac_uk/EWcdtofwmI9Klo27rd-pHp4BktES1mLWkKIyemtzY7tT0w?e=9GwPfd)
+## Technologies Used
+Flutter, primarily written in Dart, can be compiled to support numerous platforms, although Tap Tennis is only officially supported on Android and iOS.
 
+Flame game engine has been used for the game itself which handles events such as collision detection and user input.
 
+Firebase, which works very nicely with Flutter, has been used to store the leaderboard data. The app will read realtime leaderboard data from here and submit new nicknames and scores.
